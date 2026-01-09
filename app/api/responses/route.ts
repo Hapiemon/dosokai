@@ -5,10 +5,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const { name, class: classValue, attendance, attendanceOther, hasAllergy, allergyDetails, remarks } = body;
+    const { lastName, firstName, maidenName, class: classValue, attendance, attendanceOther, hasAllergy, allergyDetails, remarks } = body;
 
     // バリデーション
-    if (!name || !classValue || !attendance || typeof hasAllergy !== 'boolean') {
+    if (!lastName || !firstName || !classValue || !attendance || typeof hasAllergy !== 'boolean') {
       return NextResponse.json(
         { error: '必須項目が入力されていません' },
         { status: 400 }
@@ -29,7 +29,9 @@ export async function POST(request: NextRequest) {
     // データベースに保存
     const response = await prisma.response.create({
       data: {
-        name,
+        lastName,
+        firstName,
+        maidenName: maidenName || null,
         class: classValue,
         attendance,
         attendanceOther: attendanceOther || null,

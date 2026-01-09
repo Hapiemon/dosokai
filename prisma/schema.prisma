@@ -12,7 +12,9 @@ datasource db {
 
 model Response {
   id                String   @id @default(cuid())
-  name              String
+  lastName          String   // 姓
+  firstName         String   // 名
+  maidenName        String?  // 旧姓
   class             String   // 1, 2, 3, 4, 不明
   attendance        String   // 出席する, 出席しない, その他
   attendanceOther   String?  // その他の場合の詳細

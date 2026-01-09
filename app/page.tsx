@@ -4,7 +4,9 @@ import { useState, FormEvent } from 'react';
 
 export default function Home() {
   const [formData, setFormData] = useState({
-    name: '',
+    lastName: '',
+    firstName: '',
+    maidenName: '',
     class: '',
     attendance: '',
     attendanceOther: '',
@@ -27,7 +29,9 @@ export default function Home() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
+          lastName: formData.lastName,
+          firstName: formData.firstName,
+          maidenName: formData.maidenName || null,
           class: formData.class,
           attendance: formData.attendance,
           attendanceOther: formData.attendanceOther || null,
@@ -40,7 +44,9 @@ export default function Home() {
       if (response.ok) {
         setShowSuccessModal(true);
         setFormData({
-          name: '',
+          lastName: '',
+          firstName: '',
+          maidenName: '',
           class: '',
           attendance: '',
           attendanceOther: '',
@@ -94,18 +100,47 @@ export default function Home() {
 
           {/* フォーム */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* 名前 */}
+            {/* 姓 */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">
-                お名前 <span className="text-red-600">*</span>
+                姓 <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
                 required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                value={formData.lastName}
+                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                placeholder="山田 太郎"
+                placeholder="山田"
+              />
+            </div>
+
+            {/* 名 */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                名 <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.firstName}
+                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                placeholder="太郎"
+              />
+            </div>
+
+            {/* 旧姓 */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                旧姓(あれば)
+              </label>
+              <input
+                type="text"
+                value={formData.maidenName}
+                onChange={(e) => setFormData({ ...formData, maidenName: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                placeholder="鈴木"
               />
             </div>
 
