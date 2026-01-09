@@ -23,6 +23,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 日本時間で現在時刻を取得
+    const jstDate = new Date(Date.now() + 9 * 60 * 60 * 1000);
+
     // データベースに保存
     const response = await prisma.response.create({
       data: {
@@ -33,6 +36,7 @@ export async function POST(request: NextRequest) {
         hasAllergy,
         allergyDetails: allergyDetails || null,
         remarks: remarks || null,
+        createdAt: jstDate,
       },
     });
 
