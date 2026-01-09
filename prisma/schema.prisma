@@ -1,0 +1,25 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Response {
+  id                String   @id @default(cuid())
+  name              String
+  class             String   // 1, 2, 3, 4, 不明
+  attendance        String   // 出席する, 出席しない, その他
+  attendanceOther   String?  // その他の場合の詳細
+  hasAllergy        Boolean
+  allergyDetails    String?  // アレルギーの詳細
+  remarks           String?  // 備考
+  createdAt         DateTime @default(now())
+
+  @@map("responses")
+}
