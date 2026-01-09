@@ -133,7 +133,7 @@ export default function Home() {
             {/* 旧姓 */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">
-                旧姓(あれば)
+                旧姓(あれば記入お願いします)
               </label>
               <input
                 type="text"
