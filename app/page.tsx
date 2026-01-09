@@ -31,7 +31,7 @@ export default function Home() {
           class: formData.class,
           attendance: formData.attendance,
           attendanceOther: formData.attendanceOther || null,
-          hasAllergy: formData.hasAllergy === 'はい',
+          hasAllergy: formData.hasAllergy === '有り',
           allergyDetails: formData.allergyDetails || null,
           remarks: formData.remarks || null,
         }),
@@ -191,26 +191,26 @@ export default function Home() {
                   <input
                     type="radio"
                     required
-                    value="いいえ"
-                    checked={formData.hasAllergy === 'いいえ'}
+                    value="無し"
+                    checked={formData.hasAllergy === '無し'}
                     onChange={(e) => setFormData({ ...formData, hasAllergy: e.target.value, allergyDetails: '' })}
                     className="mr-2 text-pink-600 focus:ring-pink-500"
                   />
-                  <span>いいえ</span>
+                  <span>無し</span>
                 </label>
                 <label className="flex items-center">
                   <input
                     type="radio"
                     required
-                    value="はい"
-                    checked={formData.hasAllergy === 'はい'}
+                    value="有り"
+                    checked={formData.hasAllergy === '有り'}
                     onChange={(e) => setFormData({ ...formData, hasAllergy: e.target.value })}
                     className="mr-2 text-pink-600 focus:ring-pink-500"
                   />
-                  <span>はい</span>
+                  <span>有り</span>
                 </label>
               </div>
-              {formData.hasAllergy === 'はい' && (
+              {formData.hasAllergy === '有り' && (
                 <textarea
                   value={formData.allergyDetails}
                   onChange={(e) => setFormData({ ...formData, allergyDetails: e.target.value })}
