@@ -258,12 +258,6 @@ export default function Home() {
             <p className="text-gray-600 mb-6">
               アンケートにご協力いただき<br />ありがとうございました。
             </p>
-            <button
-              onClick={() => setShowSuccessModal(false)}
-              className="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-            >
-              閉じる
-            </button>
           </div>
         </div>
       )}
