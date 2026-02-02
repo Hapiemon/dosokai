@@ -128,7 +128,8 @@ export default function ResponseForm() {
           <div className="text-center mb-8 border-b pb-6">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">🌸 同窓会のご案内 🌸</h1>
             <p className="text-gray-600 mb-2">明けましておめでとうございます。</p>
-            <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、アンケートのご案内です。</p>
+            <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、アンケートへご協力ください。</p>
+            <p className="text-gray-600 mb-2">集計結果によって開催日程を決定します。</p>
             <p className="text-sm text-red-600 font-semibold">※回答期限:2026年2月15日(日)</p>
           </div>
 
