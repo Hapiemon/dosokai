@@ -25,6 +25,36 @@ export default function Home() {
     setIsSubmitting(true);
 
     // フロントエンド側のバリデーション
+    if (!formData.lastName.trim()) {
+      alert('姓を入力してください');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.firstName.trim()) {
+      alert('名を入力してください');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.class) {
+      alert('組を選択してください');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (formData.eventDates.length === 0) {
+      alert('参加可能な日程を選択してください');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.companionStatus) {
+      alert('同伴者の有無を選択してください');
+      setIsSubmitting(false);
+      return;
+    }
+
     if (formData.companionStatus === '有り') {
       const adults = Number(formData.companionAdults);
       const children = Number(formData.companionChildren);
@@ -33,6 +63,12 @@ export default function Home() {
         setIsSubmitting(false);
         return;
       }
+    }
+
+    if (!formData.hasAllergy) {
+      alert('アレルギーの有無を選択してください');
+      setIsSubmitting(false);
+      return;
     }
 
     if (formData.hasAllergy === '有り' && !formData.allergyDetails.trim()) {
