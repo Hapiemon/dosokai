@@ -93,21 +93,22 @@ export default function Home() {
           <div className="bg-pink-50 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-gray-800 mb-4">■ 開催概要</h2>
             <div className="space-y-4 text-gray-700">
-              <div className="border-b pb-3">
-                <p className="font-semibold text-pink-600 mb-2">開催日程 案1</p>
-                <p className="font-semibold">📅 日時</p>
-                <p className="ml-4">2026年5月3日(日)</p>
-                <p className="ml-4 text-sm text-gray-600">受付：17:30 / 乾杯：18:00 / 終了：20:00</p>
-                <p className="font-semibold mt-2">📍 場所</p>
+              <div className="space-y-2">
+                <p className="font-semibold text-pink-600 mb-2">開催日程</p>
+                <label className="flex items-center ml-2">
+                  <span className="text-base">案1：2026年5月3日(日)</span>
+                </label>
+                <label className="flex items-center ml-2">
+                  <span className="text-base">案2：2026年6月20日(土)</span>
+                </label>
+              </div>
+              <div>
+                <p className="font-semibold">📍 場所</p>
                 <p className="ml-4">サクラマチ熊本 RHCカフェ(貸切予定)</p>
               </div>
-              <div className="border-b pb-3">
-                <p className="font-semibold text-pink-600 mb-2">開催日程 案2</p>
-                <p className="font-semibold">📅 日時</p>
-                <p className="ml-4">2026年6月20日(土)</p>
-                <p className="ml-4 text-sm text-gray-600">受付：17:30 / 乾杯：18:00 / 終了：20:00</p>
-                <p className="font-semibold mt-2">📍 場所</p>
-                <p className="ml-4">サクラマチ熊本 RHCカフェ(貸切予定)</p>
+              <div>
+                <p className="font-semibold">🕐 時間</p>
+                <p className="ml-4">受付：17:30 / 乾杯：18:00 / 終了：20:00</p>
               </div>
               <div>
                 <p className="font-semibold">💰 形式・予算</p>
