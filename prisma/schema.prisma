@@ -17,8 +17,6 @@ model Response {
   maidenName        String?  // 旧姓
   class             String   // 1, 2, 3, 4, 不明
   eventDates        String[] // 開催日程 (5/3, 6/20など)
-  attendance        String   // 出席する, 出席しない, その他
-  attendanceOther   String?  // その他の場合の詳細
   companionStatus   String   // 無し, 有り
   companionAdults   Int?     // 同伴者(大人)
   companionChildren Int?     // 同伴者(子供)

@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
       maidenName,
       class: classValue,
       eventDates,
-      attendance,
-      attendanceOther,
       companionStatus,
       companionAdults,
       companionChildren,
@@ -22,17 +20,9 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // バリデーション
-    if (!lastName || !firstName || !classValue || !eventDates || eventDates.length === 0 || !attendance || !companionStatus || typeof hasAllergy !== 'boolean') {
+    if (!lastName || !firstName || !classValue || !eventDates || eventDates.length === 0 || !companionStatus || typeof hasAllergy !== 'boolean') {
       return NextResponse.json(
         { error: '必須項目が入力されていません' },
-        { status: 400 }
-      );
-    }
-
-    // その他を選択した場合、attendanceOtherが必要
-    if (attendance === 'その他' && !attendanceOther) {
-      return NextResponse.json(
-        { error: '出欠で「その他」を選択した場合は詳細を入力してください' },
         { status: 400 }
       );
     }
@@ -59,8 +49,6 @@ export async function POST(request: NextRequest) {
         maidenName: maidenName || null,
         class: classValue,
         eventDates,
-        attendance,
-        attendanceOther: attendanceOther || null,
         companionStatus,
         companionAdults: companionStatus === '有り' ? Number(companionAdults) : null,
         companionChildren: companionStatus === '有り' ? Number(companionChildren) : null,

@@ -9,8 +9,6 @@ export default function Home() {
     maidenName: '',
     class: '',
     eventDates: [] as string[],
-    attendance: '',
-    attendanceOther: '',
     companionStatus: '',
     companionAdults: '0',
     companionChildren: '0',
@@ -38,8 +36,6 @@ export default function Home() {
           maidenName: formData.maidenName || null,
           class: formData.class,
           eventDates: formData.eventDates,
-          attendance: formData.attendance,
-          attendanceOther: formData.attendanceOther || null,
           companionStatus: formData.companionStatus,
           companionAdults: formData.companionAdults,
           companionChildren: formData.companionChildren,
@@ -57,8 +53,6 @@ export default function Home() {
           maidenName: '',
           class: '',
           eventDates: [],
-          attendance: '',
-          attendanceOther: '',
           companionStatus: '',
           companionAdults: '0',
           companionChildren: '0',
@@ -246,58 +240,6 @@ export default function Home() {
               </div>
               {formData.eventDates.length === 0 && (
                 <p className="text-sm text-red-500 mt-2">少なくとも1つの日程を選択してください</p>
-              )}
-            </div>
-
-            {/* 出席 */}
-            <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
-                出欠 <span className="text-red-600">*</span>
-              </label>
-              <div className="space-y-2">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    required
-                    value="出席する"
-                    checked={formData.attendance === '出席する'}
-                    onChange={(e) => setFormData({ ...formData, attendance: e.target.value, attendanceOther: '' })}
-                    className="mr-2 text-pink-600 focus:ring-pink-500"
-                  />
-                  <span>出席する</span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    required
-                    value="出席しない"
-                    checked={formData.attendance === '出席しない'}
-                    onChange={(e) => setFormData({ ...formData, attendance: e.target.value, attendanceOther: '' })}
-                    className="mr-2 text-pink-600 focus:ring-pink-500"
-                  />
-                  <span>出席しない</span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    required
-                    value="その他"
-                    checked={formData.attendance === 'その他'}
-                    onChange={(e) => setFormData({ ...formData, attendance: e.target.value })}
-                    className="mr-2 text-pink-600 focus:ring-pink-500"
-                  />
-                  <span>その他</span>
-                </label>
-              </div>
-              {formData.attendance === 'その他' && (
-                <textarea
-                  required
-                  value={formData.attendanceOther}
-                  onChange={(e) => setFormData({ ...formData, attendanceOther: e.target.value })}
-                  className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                  rows={3}
-                  placeholder="詳細をご記入ください"
-                />
               )}
             </div>
 
