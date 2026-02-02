@@ -173,7 +173,6 @@ export default function Home() {
               </label>
               <input
                 type="text"
-                required
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
@@ -188,7 +187,6 @@ export default function Home() {
               </label>
               <input
                 type="text"
-                required
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
@@ -298,7 +296,6 @@ export default function Home() {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    required
                     value="無し"
                     checked={formData.hasAllergy === '無し'}
                     onChange={(e) => setFormData({ ...formData, hasAllergy: e.target.value, allergyDetails: '' })}
@@ -309,7 +306,6 @@ export default function Home() {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    required
                     value="有り"
                     checked={formData.hasAllergy === '有り'}
                     onChange={(e) => setFormData({ ...formData, hasAllergy: e.target.value })}
@@ -320,7 +316,6 @@ export default function Home() {
               </div>
               {formData.hasAllergy === '有り' && (
                 <textarea
-                  required
                   value={formData.allergyDetails}
                   onChange={(e) => setFormData({ ...formData, allergyDetails: e.target.value })}
                   className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
@@ -339,7 +334,6 @@ export default function Home() {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    required
                     value="無し"
                     checked={formData.companionStatus === '無し'}
                     onChange={(e) =>
@@ -357,7 +351,6 @@ export default function Home() {
                 <label className="flex items-center">
                   <input
                     type="radio"
-                    required
                     value="有り"
                     checked={formData.companionStatus === '有り'}
                     onChange={(e) => setFormData({ ...formData, companionStatus: e.target.value })}
@@ -375,7 +368,6 @@ export default function Home() {
                       <span className="ml-2 text-xs text-gray-500">※会費がかかります。</span>
                     </label>
                     <select
-                      required
                       value={formData.companionAdults}
                       onChange={(e) => setFormData({ ...formData, companionAdults: e.target.value })}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
@@ -395,7 +387,6 @@ export default function Home() {
                       <span className="ml-2 text-xs text-gray-500">※無料</span>
                     </label>
                     <select
-                      required
                       value={formData.companionChildren}
                       onChange={(e) => setFormData({ ...formData, companionChildren: e.target.value })}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
