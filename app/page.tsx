@@ -105,7 +105,7 @@ export default function Home() {
               <div>
                 <p className="font-semibold">📍 場所</p>
                 <p className="ml-4">サクラマチ熊本 RHCカフェ</p>
-                <p><a href="https://sakuramachi-kumamoto.jp/shop/rhcronherman_cafe" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">🔗お店の詳細</a></p>
+                <p className="ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/rhcronherman_cafe" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">🔗お店の詳細</a></p>
               </div>
               <div>
                 <p className="font-semibold">🕐 時間</p>
