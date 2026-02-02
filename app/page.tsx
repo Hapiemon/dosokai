@@ -8,7 +8,7 @@ export default function Home() {
     firstName: '',
     maidenName: '',
     class: '',
-    eventDates: [],
+    eventDates: [] as string[],
     attendance: '',
     attendanceOther: '',
     companionStatus: '',
