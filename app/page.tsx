@@ -85,7 +85,7 @@ export default function Home() {
           <div className="text-center mb-8 border-b pb-6">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">🌸 同窓会のご案内 🌸</h1>
             <p className="text-gray-600 mb-2">明けましておめでとうございます。</p>
-            <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、ご案内です。</p>
+            <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、アンケートのご案内です。</p>
             <p className="text-sm text-red-600 font-semibold">※回答期限:2026年2月15日(日)</p>
           </div>
 
@@ -298,7 +298,7 @@ export default function Home() {
             {/* アレルギー */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">
-                アレルギーの有無 <span className="text-red-600">*</span>
+                食べ物のアレルギーの有無 <span className="text-red-600">*</span>
               </label>
               <div className="space-y-2">
                 <label className="flex items-center">
