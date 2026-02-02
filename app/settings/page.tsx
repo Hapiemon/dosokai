@@ -105,14 +105,6 @@ export default function SettingsPage() {
     }
   };
 
-  const getEventDates = (record: Response) => {
-    const dates = [];
-    if (record.eventMay3 === 1) dates.push('5月3日');
-    if (record.eventSep20 === 1) dates.push('9月20日');
-    if (record.notAttending === 1) dates.push('不参加');
-    return dates.join(', ') || '選択なし';
-  };
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ja-JP', {
       year: 'numeric',
@@ -176,10 +168,10 @@ export default function SettingsPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-300">
+              <table className="w-full border-collapse border border-gray-300 text-sm">
                 <thead>
                   <tr className="bg-gray-100">
-                    <th className="border border-gray-300 p-3 text-left">
+                    <th className="border border-gray-300 p-2">
                       <input
                         type="checkbox"
                         checked={selectedIds.size === responses.length && responses.length > 0}
@@ -187,21 +179,27 @@ export default function SettingsPage() {
                         className="cursor-pointer"
                       />
                     </th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">姓名</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">旧姓</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">組</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">参加日程</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">同伴者</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">大人/子供</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">アレルギー</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">備考</th>
-                    <th className="border border-gray-300 p-3 text-left font-semibold">回答日時</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">id</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">lastName</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">firstName</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">maidenName</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">class</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">eventMay3</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">eventSep20</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">notAttending</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">companionStatus</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">companionAdults</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">companionChildren</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">hasAllergy</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">allergyDetails</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">remarks</th>
+                    <th className="border border-gray-300 p-2 text-left font-semibold">createdAt</th>
                   </tr>
                 </thead>
                 <tbody>
                   {responses.map((response) => (
                     <tr key={response.id} className="hover:bg-gray-50">
-                      <td className="border border-gray-300 p-3">
+                      <td className="border border-gray-300 p-2">
                         <input
                           type="checkbox"
                           checked={selectedIds.has(response.id)}
@@ -209,46 +207,21 @@ export default function SettingsPage() {
                           className="cursor-pointer"
                         />
                       </td>
-                      <td className="border border-gray-300 p-3">
-                        {response.lastName} {response.firstName}
-                      </td>
-                      <td className="border border-gray-300 p-3">
-                        {response.maidenName || '-'}
-                      </td>
-                      <td className="border border-gray-300 p-3">
-                        {response.class}
-                      </td>
-                      <td className="border border-gray-300 p-3">
-                        <span className="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded">
-                          {getEventDates(response)}
-                        </span>
-                      </td>
-                      <td className="border border-gray-300 p-3">
-                        {response.companionStatus}
-                      </td>
-                      <td className="border border-gray-300 p-3 text-sm">
-                        {response.companionAdults !== null || response.companionChildren !== null
-                          ? `大人: ${response.companionAdults || 0}, 子供: ${response.companionChildren || 0}`
-                          : '-'}
-                      </td>
-                      <td className="border border-gray-300 p-3 text-sm">
-                        {response.hasAllergy ? (
-                          <span>
-                            有り
-                            {response.allergyDetails && (
-                              <div className="text-xs text-gray-600 mt-1">{response.allergyDetails}</div>
-                            )}
-                          </span>
-                        ) : (
-                          '無し'
-                        )}
-                      </td>
-                      <td className="border border-gray-300 p-3 text-sm max-w-xs">
-                        {response.remarks || '-'}
-                      </td>
-                      <td className="border border-gray-300 p-3 text-sm whitespace-nowrap">
-                        {formatDate(response.createdAt)}
-                      </td>
+                      <td className="border border-gray-300 p-2 font-mono text-xs break-all">{response.id}</td>
+                      <td className="border border-gray-300 p-2">{response.lastName}</td>
+                      <td className="border border-gray-300 p-2">{response.firstName}</td>
+                      <td className="border border-gray-300 p-2">{response.maidenName || '-'}</td>
+                      <td className="border border-gray-300 p-2">{response.class}</td>
+                      <td className="border border-gray-300 p-2 text-center">{response.eventMay3}</td>
+                      <td className="border border-gray-300 p-2 text-center">{response.eventSep20}</td>
+                      <td className="border border-gray-300 p-2 text-center">{response.notAttending}</td>
+                      <td className="border border-gray-300 p-2">{response.companionStatus}</td>
+                      <td className="border border-gray-300 p-2 text-center">{response.companionAdults ?? '-'}</td>
+                      <td className="border border-gray-300 p-2 text-center">{response.companionChildren ?? '-'}</td>
+                      <td className="border border-gray-300 p-2 text-center">{response.hasAllergy ? '1' : '0'}</td>
+                      <td className="border border-gray-300 p-2">{response.allergyDetails || '-'}</td>
+                      <td className="border border-gray-300 p-2">{response.remarks || '-'}</td>
+                      <td className="border border-gray-300 p-2 text-xs whitespace-nowrap">{formatDate(response.createdAt)}</td>
                     </tr>
                   ))}
                 </tbody>
