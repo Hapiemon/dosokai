@@ -216,7 +216,6 @@ export default function Home() {
                 組 <span className="text-red-600">*</span>
               </label>
               <select
-                required
                 value={formData.class}
                 onChange={(e) => setFormData({ ...formData, class: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
