@@ -35,6 +35,12 @@ export default function Home() {
       }
     }
 
+    if (formData.hasAllergy === '有り' && !formData.allergyDetails.trim()) {
+      alert('アレルギーが有りの場合は、詳細を入力してください');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const response = await fetch('/api/responses', {
         method: 'POST',
@@ -285,11 +291,12 @@ export default function Home() {
               </div>
               {formData.hasAllergy === '有り' && (
                 <textarea
+                  required
                   value={formData.allergyDetails}
                   onChange={(e) => setFormData({ ...formData, allergyDetails: e.target.value })}
                   className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   rows={3}
-                  placeholder="アレルギーの詳細をご記入ください(任意)"
+                  placeholder="アレルギーの詳細をご記入ください"
                 />
               )}
             </div>

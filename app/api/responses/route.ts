@@ -45,6 +45,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // アレルギーが有りの場合、詳細が必須
+    if (hasAllergy && (!allergyDetails || allergyDetails.trim() === '')) {
+      return NextResponse.json(
+        { error: 'アレルギーが有りの場合は、詳細を入力してください' },
+        { status: 400 }
+      );
+    }
+
     // 日本時間で現在時刻を取得
     const jstDate = new Date(Date.now() + 9 * 60 * 60 * 1000);
 
