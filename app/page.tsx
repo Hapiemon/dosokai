@@ -97,17 +97,15 @@ export default function Home() {
                 <p className="font-semibold text-pink-600 mb-2">開催日程 案1</p>
                 <p className="font-semibold">📅 日時</p>
                 <p className="ml-4">2026年5月3日(日) 16:00〜19:30(20:00解散)</p>
-                <p className="font-semibold mt-2">📍 場所</p>
-                <p className="ml-4">サクラマチ熊本 RHCカフェ(貸切予定)</p>
               </div>
               <div className="border-b pb-3">
                 <p className="font-semibold text-pink-600 mb-2">開催日程 案2</p>
                 <p className="font-semibold">📅 日時</p>
                 <p className="ml-4">2026年6月20日(土) 17:30〜20:00</p>
-                <p className="font-semibold mt-2">📍 場所</p>
-                <p className="ml-4">サクラマチ熊本 RHCカフェ(貸切予定)</p>
               </div>
               <div>
+                <p className="font-semibold mt-2">📍 場所</p>
+                <p className="ml-4">サクラマチ熊本 RHCカフェ(貸切予定)</p>
                 <p className="font-semibold">💰 形式・予算</p>
                 <p className="ml-4">立食形式</p>
                 <p className="ml-4">会費:5,000円前後予定</p>
