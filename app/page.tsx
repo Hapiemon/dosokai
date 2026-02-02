@@ -139,10 +139,10 @@ export default function Home() {
               <div className="space-y-2">
                 <p className="font-semibold text-pink-600 mb-2">開催日程</p>
                 <label className="flex items-center ml-2">
-                  <span className="text-base">案1：2026年5月3日(土)</span>
+                  <span className="text-base">案1:2026年5月3日(日)</span>
                 </label>
                 <label className="flex items-center ml-2">
-                  <span className="text-base">案2：2026年9月20日(土)</span>
+                  <span className="text-base">案2:2026年9月20日(日)</span>
                 </label>
               </div>
               <div>
@@ -254,7 +254,7 @@ export default function Home() {
                     className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
                   />
                   <div>
-                    <span className="font-semibold">2026年5月3日(土)</span>
+                    <span className="font-semibold">2026年5月3日(日)</span>
                   </div>
                 </label>
                 <label className="flex items-start">
@@ -278,7 +278,7 @@ export default function Home() {
                     className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
                   />
                   <div>
-                    <span className="font-semibold">2026年9月20日(土)</span>
+                    <span className="font-semibold">2026年9月20日(日)</span>
                   </div>
                 </label>
               </div>
