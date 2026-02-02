@@ -242,7 +242,7 @@ export default function Home() {
                       if (e.target.checked) {
                         setFormData({
                           ...formData,
-                          eventDates: [...formData.eventDates, '5月3日'],
+                          eventDates: [...formData.eventDates.filter((d) => d !== '不参加'), '5月3日'],
                         });
                       } else {
                         setFormData({
@@ -266,7 +266,7 @@ export default function Home() {
                       if (e.target.checked) {
                         setFormData({
                           ...formData,
-                          eventDates: [...formData.eventDates, '9月20日'],
+                          eventDates: [...formData.eventDates.filter((d) => d !== '不参加'), '9月20日'],
                         });
                       } else {
                         setFormData({
@@ -279,6 +279,30 @@ export default function Home() {
                   />
                   <div>
                     <span className="font-semibold">2026年9月20日(日)</span>
+                  </div>
+                </label>
+                <label className="flex items-start">
+                  <input
+                    type="checkbox"
+                    value="不参加"
+                    checked={formData.eventDates.includes('不参加')}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          eventDates: ['不参加'],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          eventDates: formData.eventDates.filter((d) => d !== '不参加'),
+                        });
+                      }
+                    }}
+                    className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
+                  />
+                  <div>
+                    <span className="font-semibold">不参加</span>
                   </div>
                 </label>
               </div>
