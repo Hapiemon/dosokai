@@ -108,7 +108,9 @@ export default function Home() {
               </div>
               <div>
                 <p className="font-semibold">🕐 時間</p>
-                <p className="ml-4">受付：17:30 / 乾杯：18:00 / 終了：20:00</p>
+                <p className="ml-4">受付：17:30</p>
+                <p className="ml-4">開始：18:00</p>
+                <p className="ml-4">終了：20:30予定</p>
               </div>
               <div>
                 <p className="font-semibold">💰 形式・予算</p>
