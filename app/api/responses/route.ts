@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
       firstName,
       maidenName,
       class: classValue,
+      eventDates,
       attendance,
       attendanceOther,
       companionStatus,
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // バリデーション
-    if (!lastName || !firstName || !classValue || !attendance || !companionStatus || typeof hasAllergy !== 'boolean') {
+    if (!lastName || !firstName || !classValue || !eventDates || eventDates.length === 0 || !attendance || !companionStatus || typeof hasAllergy !== 'boolean') {
       return NextResponse.json(
         { error: '必須項目が入力されていません' },
         { status: 400 }
@@ -57,6 +58,7 @@ export async function POST(request: NextRequest) {
         firstName,
         maidenName: maidenName || null,
         class: classValue,
+        eventDates,
         attendance,
         attendanceOther: attendanceOther || null,
         companionStatus,

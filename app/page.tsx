@@ -8,6 +8,7 @@ export default function Home() {
     firstName: '',
     maidenName: '',
     class: '',
+    eventDates: [],
     attendance: '',
     attendanceOther: '',
     companionStatus: '',
@@ -36,6 +37,7 @@ export default function Home() {
           firstName: formData.firstName,
           maidenName: formData.maidenName || null,
           class: formData.class,
+          eventDates: formData.eventDates,
           attendance: formData.attendance,
           attendanceOther: formData.attendanceOther || null,
           companionStatus: formData.companionStatus,
@@ -54,6 +56,7 @@ export default function Home() {
           firstName: '',
           maidenName: '',
           class: '',
+          eventDates: [],
           attendance: '',
           attendanceOther: '',
           companionStatus: '',
@@ -83,21 +86,26 @@ export default function Home() {
             <h1 className="text-3xl font-bold text-gray-800 mb-4">🌸 同窓会のご案内 🌸</h1>
             <p className="text-gray-600 mb-2">明けましておめでとうございます。</p>
             <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、ご案内です。</p>
-            <p className="text-sm text-red-600 font-semibold">※回答期限:2026年1月16日(金)</p>
+            <p className="text-sm text-red-600 font-semibold">※回答期限:2026年2月15日(日)</p>
           </div>
 
           {/* イベント詳細 */}
           <div className="bg-pink-50 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-gray-800 mb-4">■ 開催概要</h2>
-            <div className="space-y-3 text-gray-700">
-              <div>
+            <div className="space-y-4 text-gray-700">
+              <div className="border-b pb-3">
+                <p className="font-semibold text-pink-600 mb-2">開催日程 案1</p>
                 <p className="font-semibold">📅 日時</p>
                 <p className="ml-4">2026年5月3日(日) 16:00〜19:30(20:00解散)</p>
+                <p className="font-semibold mt-2">📍 場所</p>
+                <p className="ml-4">サクラマチ熊本 RHCカフェ(貸切予定)</p>
               </div>
-              <div>
-                <p className="font-semibold">📍 場所</p>
-                <p className="ml-4">サクラマチ熊本</p>
-                <p className="ml-4">RHCカフェ(貸切予定)</p>
+              <div className="border-b pb-3">
+                <p className="font-semibold text-pink-600 mb-2">開催日程 案2</p>
+                <p className="font-semibold">📅 日時</p>
+                <p className="ml-4">2026年6月20日(土) 17:30〜20:00</p>
+                <p className="font-semibold mt-2">📍 場所</p>
+                <p className="ml-4">サクラマチ熊本 RHCカフェ(貸切予定)</p>
               </div>
               <div>
                 <p className="font-semibold">💰 形式・予算</p>
@@ -171,6 +179,68 @@ export default function Home() {
                 <option value="4">4組</option>
                 <option value="不明">不明</option>
               </select>
+            </div>
+
+            {/* 開催日程 */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                参加可能な日程を選択してください <span className="text-red-600">*</span>
+              </label>
+              <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
+                <label className="flex items-start">
+                  <input
+                    type="checkbox"
+                    value="5月3日"
+                    checked={formData.eventDates.includes('5月3日')}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          eventDates: [...formData.eventDates, '5月3日'],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          eventDates: formData.eventDates.filter((d) => d !== '5月3日'),
+                        });
+                      }
+                    }}
+                    className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
+                  />
+                  <div>
+                    <span className="font-semibold">2026年5月3日(日)</span>
+                    <p className="text-sm text-gray-600">16:00〜19:30(20:00解散)</p>
+                  </div>
+                </label>
+                <label className="flex items-start">
+                  <input
+                    type="checkbox"
+                    value="6月20日"
+                    checked={formData.eventDates.includes('6月20日')}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          eventDates: [...formData.eventDates, '6月20日'],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          eventDates: formData.eventDates.filter((d) => d !== '6月20日'),
+                        });
+                      }
+                    }}
+                    className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
+                  />
+                  <div>
+                    <span className="font-semibold">2026年6月20日(土)</span>
+                    <p className="text-sm text-gray-600">17:30〜20:00</p>
+                  </div>
+                </label>
+              </div>
+              {formData.eventDates.length === 0 && (
+                <p className="text-sm text-red-500 mt-2">少なくとも1つの日程を選択してください</p>
+              )}
             </div>
 
             {/* 出席 */}
