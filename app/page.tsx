@@ -139,10 +139,10 @@ export default function Home() {
               <div className="space-y-2">
                 <p className="font-semibold text-pink-600 mb-2">開催日程</p>
                 <label className="flex items-center ml-2">
-                  <span className="text-base">案1：2026年5月3日(日)</span>
+                  <span className="text-base">案1：2026年5月3日(土)</span>
                 </label>
                 <label className="flex items-center ml-2">
-                  <span className="text-base">案2：2026年6月20日(土)</span>
+                  <span className="text-base">案2：2026年9月20日(土)</span>
                 </label>
               </div>
               <div>
@@ -254,31 +254,31 @@ export default function Home() {
                     className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
                   />
                   <div>
-                    <span className="font-semibold">2026年5月3日(日)</span>
+                    <span className="font-semibold">2026年5月3日(土)</span>
                   </div>
                 </label>
                 <label className="flex items-start">
                   <input
                     type="checkbox"
-                    value="6月20日"
-                    checked={formData.eventDates.includes('6月20日')}
+                    value="9月20日"
+                    checked={formData.eventDates.includes('9月20日')}
                     onChange={(e) => {
                       if (e.target.checked) {
                         setFormData({
                           ...formData,
-                          eventDates: [...formData.eventDates, '6月20日'],
+                          eventDates: [...formData.eventDates, '9月20日'],
                         });
                       } else {
                         setFormData({
                           ...formData,
-                          eventDates: formData.eventDates.filter((d) => d !== '6月20日'),
+                          eventDates: formData.eventDates.filter((d) => d !== '9月20日'),
                         });
                       }
                     }}
                     className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
                   />
                   <div>
-                    <span className="font-semibold">2026年6月20日(土)</span>
+                    <span className="font-semibold">2026年9月20日(土)</span>
                   </div>
                 </label>
               </div>

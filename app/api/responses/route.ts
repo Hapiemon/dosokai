@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
     // イベント日程をフラグに変換 (0=チェックなし、1=参加)
     const eventMay3 = eventDates.includes('5月3日') ? 1 : 0;
-    const eventJun20 = eventDates.includes('6月20日') ? 1 : 0;
+    const eventSep20 = eventDates.includes('9月20日') ? 1 : 0;
 
     // 日本時間で現在時刻を取得
     const jstDate = new Date(Date.now() + 9 * 60 * 60 * 1000);
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
         maidenName: maidenName || null,
         class: classValue,
         eventMay3,
-        eventJun20,
+        eventSep20,
         companionStatus,
         companionAdults: companionStatus === '有り' ? Number(companionAdults) : null,
         companionChildren: companionStatus === '有り' ? Number(companionChildren) : null,
