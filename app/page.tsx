@@ -24,6 +24,17 @@ export default function Home() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // フロントエンド側のバリデーション
+    if (formData.companionStatus === '有り') {
+      const adults = Number(formData.companionAdults);
+      const children = Number(formData.companionChildren);
+      if (adults + children === 0) {
+        alert('同伴者ありを選択した場合は、大人または子供の人数を選択してください');
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
     try {
       const response = await fetch('/api/responses', {
         method: 'POST',

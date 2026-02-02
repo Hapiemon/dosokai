@@ -36,6 +36,13 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
+      // 大人と子供の合計が0でないかチェック
+      if (adults + children === 0) {
+        return NextResponse.json(
+          { error: '同伴者ありを選択した場合は、大人または子供の人数を選択してください' },
+          { status: 400 }
+        );
+      }
     }
 
     // 日本時間で現在時刻を取得
