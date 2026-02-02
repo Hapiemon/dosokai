@@ -96,12 +96,12 @@ export default function Home() {
               <div className="border-b pb-3">
                 <p className="font-semibold text-pink-600 mb-2">開催日程 案1</p>
                 <p className="font-semibold">📅 日時</p>
-                <p className="ml-4">2026年5月3日(日) 16:00〜19:30(20:00解散)</p>
+                <p className="ml-4">2026年5月3日(日) 18:00〜20:00</p>
               </div>
               <div className="border-b pb-3">
                 <p className="font-semibold text-pink-600 mb-2">開催日程 案2</p>
                 <p className="font-semibold">📅 日時</p>
-                <p className="ml-4">2026年6月20日(土) 17:30〜20:00</p>
+                <p className="ml-4">2026年6月20日(土) 18:00〜20:00</p>
               </div>
               <div>
                 <p className="font-semibold mt-2">📍 場所</p>
