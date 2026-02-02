@@ -206,7 +206,7 @@ export default function SettingsPage() {
                           className="cursor-pointer"
                         />
                       </td>
-                      <td className="border border-gray-300 p-2 font-mono text-xs break-all">{response.id}</td>
+                      <td className="border border-gray-300 p-2">{response.lastName}</td>
                       <td className="border border-gray-300 p-2">{response.firstName}</td>
                       <td className="border border-gray-300 p-2">{response.maidenName || '-'}</td>
                       <td className="border border-gray-300 p-2">{response.class}</td>
