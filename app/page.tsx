@@ -20,59 +20,55 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // フロントエンド側のバリデーション
+  // バリデーション関数
+  const validateForm = (): string | null => {
     if (!formData.lastName.trim()) {
-      alert('姓を入力してください');
-      setIsSubmitting(false);
-      return;
+      return '姓を入力してください';
     }
 
     if (!formData.firstName.trim()) {
-      alert('名を入力してください');
-      setIsSubmitting(false);
-      return;
+      return '名を入力してください';
     }
 
     if (!formData.class) {
-      alert('組を選択してください');
-      setIsSubmitting(false);
-      return;
+      return '組を選択してください';
     }
 
     if (formData.eventDates.length === 0) {
-      alert('参加可能な日程を選択してください');
-      setIsSubmitting(false);
-      return;
+      return '参加可能な日程を選択してください';
     }
 
     if (!formData.companionStatus) {
-      alert('同伴者の有無を選択してください');
-      setIsSubmitting(false);
-      return;
+      return '同伴者の有無を選択してください';
     }
 
     if (formData.companionStatus === '有り') {
       const adults = Number(formData.companionAdults);
       const children = Number(formData.companionChildren);
       if (adults + children === 0) {
-        alert('同伴者ありを選択した場合は、大人または子供の人数を選択してください');
-        setIsSubmitting(false);
-        return;
+        return '同伴者ありを選択した場合は、大人または子供の人数を選択してください';
       }
     }
 
     if (!formData.hasAllergy) {
-      alert('アレルギーの有無を選択してください');
-      setIsSubmitting(false);
-      return;
+      return 'アレルギーの有無を選択してください';
     }
 
     if (formData.hasAllergy === '有り' && !formData.allergyDetails.trim()) {
-      alert('アレルギーが有りの場合は、詳細を入力してください');
+      return 'アレルギーが有りの場合は、詳細を入力してください';
+    }
+
+    return null;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // バリデーション実行
+    const validationError = validateForm();
+    if (validationError) {
+      alert(validationError);
       setIsSubmitting(false);
       return;
     }
