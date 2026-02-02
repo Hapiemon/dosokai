@@ -179,7 +179,6 @@ export default function SettingsPage() {
                         className="cursor-pointer"
                       />
                     </th>
-                    <th className="border border-gray-300 p-2 text-left font-semibold">id</th>
                     <th className="border border-gray-300 p-2 text-left font-semibold">lastName</th>
                     <th className="border border-gray-300 p-2 text-left font-semibold">firstName</th>
                     <th className="border border-gray-300 p-2 text-left font-semibold">maidenName</th>
@@ -208,7 +207,6 @@ export default function SettingsPage() {
                         />
                       </td>
                       <td className="border border-gray-300 p-2 font-mono text-xs break-all">{response.id}</td>
-                      <td className="border border-gray-300 p-2">{response.lastName}</td>
                       <td className="border border-gray-300 p-2">{response.firstName}</td>
                       <td className="border border-gray-300 p-2">{response.maidenName || '-'}</td>
                       <td className="border border-gray-300 p-2">{response.class}</td>
