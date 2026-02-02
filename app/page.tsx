@@ -10,6 +10,9 @@ export default function Home() {
     class: '',
     attendance: '',
     attendanceOther: '',
+    companionStatus: '',
+    companionAdults: '0',
+    companionChildren: '0',
     hasAllergy: '',
     allergyDetails: '',
     remarks: '',
@@ -35,6 +38,9 @@ export default function Home() {
           class: formData.class,
           attendance: formData.attendance,
           attendanceOther: formData.attendanceOther || null,
+          companionStatus: formData.companionStatus,
+          companionAdults: formData.companionAdults,
+          companionChildren: formData.companionChildren,
           hasAllergy: formData.hasAllergy === '有り',
           allergyDetails: formData.allergyDetails || null,
           remarks: formData.remarks || null,
@@ -50,6 +56,9 @@ export default function Home() {
           class: '',
           attendance: '',
           attendanceOther: '',
+          companionStatus: '',
+          companionAdults: '0',
+          companionChildren: '0',
           hasAllergy: '',
           allergyDetails: '',
           remarks: '',
@@ -253,6 +262,88 @@ export default function Home() {
                   rows={3}
                   placeholder="アレルギーの詳細をご記入ください(任意)"
                 />
+              )}
+            </div>
+
+            {/* 同伴者 */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                同伴者の有無 <span className="text-red-600">*</span>
+              </label>
+              <div className="space-y-2">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    required
+                    value="無し"
+                    checked={formData.companionStatus === '無し'}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        companionStatus: e.target.value,
+                        companionAdults: '0',
+                        companionChildren: '0',
+                      })
+                    }
+                    className="mr-2 text-pink-600 focus:ring-pink-500"
+                  />
+                  <span>無し</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    required
+                    value="有り"
+                    checked={formData.companionStatus === '有り'}
+                    onChange={(e) => setFormData({ ...formData, companionStatus: e.target.value })}
+                    className="mr-2 text-pink-600 focus:ring-pink-500"
+                  />
+                  <span>有り</span>
+                </label>
+              </div>
+
+              {formData.companionStatus === '有り' && (
+                <div className="mt-4 space-y-4">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">
+                      大人の人数 <span className="text-red-600">*</span>
+                      <span className="ml-2 text-xs text-gray-500">※会費がかかります。</span>
+                    </label>
+                    <select
+                      required
+                      value={formData.companionAdults}
+                      onChange={(e) => setFormData({ ...formData, companionAdults: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    >
+                      <option value="0">0名</option>
+                      <option value="1">1名</option>
+                      <option value="2">2名</option>
+                      <option value="3">3名</option>
+                      <option value="4">4名</option>
+                      <option value="5">5名</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">
+                      子供の人数 <span className="text-red-600">*</span>
+                      <span className="ml-2 text-xs text-gray-500">※無料</span>
+                    </label>
+                    <select
+                      required
+                      value={formData.companionChildren}
+                      onChange={(e) => setFormData({ ...formData, companionChildren: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    >
+                      <option value="0">0名</option>
+                      <option value="1">1名</option>
+                      <option value="2">2名</option>
+                      <option value="3">3名</option>
+                      <option value="4">4名</option>
+                      <option value="5">5名</option>
+                    </select>
+                  </div>
+                </div>
               )}
             </div>
 

@@ -5,10 +5,23 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const { lastName, firstName, maidenName, class: classValue, attendance, attendanceOther, hasAllergy, allergyDetails, remarks } = body;
+    const {
+      lastName,
+      firstName,
+      maidenName,
+      class: classValue,
+      attendance,
+      attendanceOther,
+      companionStatus,
+      companionAdults,
+      companionChildren,
+      hasAllergy,
+      allergyDetails,
+      remarks,
+    } = body;
 
     // バリデーション
-    if (!lastName || !firstName || !classValue || !attendance || typeof hasAllergy !== 'boolean') {
+    if (!lastName || !firstName || !classValue || !attendance || !companionStatus || typeof hasAllergy !== 'boolean') {
       return NextResponse.json(
         { error: '必須項目が入力されていません' },
         { status: 400 }
@@ -23,6 +36,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (companionStatus === '有り') {
+      const adults = Number(companionAdults);
+      const children = Number(companionChildren);
+      if (!Number.isInteger(adults) || !Number.isInteger(children) || adults < 0 || children < 0) {
+        return NextResponse.json(
+          { error: '同伴者の人数を選択してください' },
+          { status: 400 }
+        );
+      }
+    }
+
     // 日本時間で現在時刻を取得
     const jstDate = new Date(Date.now() + 9 * 60 * 60 * 1000);
 
@@ -35,6 +59,9 @@ export async function POST(request: NextRequest) {
         class: classValue,
         attendance,
         attendanceOther: attendanceOther || null,
+        companionStatus,
+        companionAdults: companionStatus === '有り' ? Number(companionAdults) : null,
+        companionChildren: companionStatus === '有り' ? Number(companionChildren) : null,
         hasAllergy,
         allergyDetails: allergyDetails || null,
         remarks: remarks || null,
