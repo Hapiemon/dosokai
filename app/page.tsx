@@ -258,7 +258,6 @@ export default function Home() {
                   />
                   <div>
                     <span className="font-semibold">2026年5月3日(日)</span>
-                    <p className="text-sm text-gray-600">16:00〜19:30(20:00解散)</p>
                   </div>
                 </label>
                 <label className="flex items-start">
@@ -283,7 +282,6 @@ export default function Home() {
                   />
                   <div>
                     <span className="font-semibold">2026年6月20日(土)</span>
-                    <p className="text-sm text-gray-600">17:30〜20:00</p>
                   </div>
                 </label>
               </div>
