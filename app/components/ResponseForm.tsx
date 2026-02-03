@@ -211,7 +211,7 @@ export default function ResponseForm() {
             {/* 組 */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">
-                組 <span className="text-red-600">*</span>
+                3年生の時の組 <span className="text-red-600">*</span>
               </label>
               <select
                 value={formData.class}
