@@ -6,20 +6,24 @@ export async function GET() {
   try {
     await prisma.form.upsert({
       where: { formId: 'form1' },
-      update: {},
+      update: {
+        title: '🌸 第1回 同窓会アンケート 🌸',
+      },
       create: {
         formId: 'form1',
-        title: '🌸 同窓会のご案内 🌸',
+        title: '🌸 第1回 同窓会アンケート 🌸',
         status: '実施中',
       },
     });
 
     await prisma.form.upsert({
       where: { formId: 'form2' },
-      update: {},
+      update: {
+        title: '🌸 第2回 同窓会アンケート 🌸',
+      },
       create: {
         formId: 'form2',
-        title: '🌸 同窓会のご案内（2026/9/20開催）🌸',
+        title: '🌸 第2回 同窓会アンケート 🌸',
         status: '実施中',
       },
     });

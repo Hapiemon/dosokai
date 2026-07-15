@@ -135,7 +135,9 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
         <div className="bg-white rounded-lg shadow-xl p-8">
           {/* ヘッダー */}
           <div className="text-center mb-8 border-b pb-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">🌸 同窓会のご案内 🌸</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              {isForm2 ? '🌸 第2回 同窓会アンケート 🌸' : '🌸 第1回 同窓会アンケート 🌸'}
+            </h1>
             <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、アンケートへご協力ください。</p>
             <p className="text-gray-600 mb-2">
               {isForm2 ? '開催内容をご確認のうえ、参加可否をご回答ください。' : '集計結果によって開催日程を決定します。'}
