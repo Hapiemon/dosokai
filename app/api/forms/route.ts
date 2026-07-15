@@ -4,6 +4,16 @@ import { prisma } from '@/lib/prisma';
 // すべてのフォーム一覧を取得
 export async function GET(request: NextRequest) {
   try {
+    await prisma.form.upsert({
+      where: { formId: 'form1' },
+      update: {},
+      create: {
+        formId: 'form1',
+        title: '🌸 同窓会のご案内 🌸',
+        status: '実施中',
+      },
+    });
+
     const forms = await prisma.form.findMany({
       orderBy: { createdAt: 'asc' },
     });

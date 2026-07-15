@@ -6,6 +6,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const {
+      formId,
       lastName,
       firstName,
       maidenName,
@@ -18,6 +19,26 @@ export async function POST(request: NextRequest) {
       allergyDetails,
       remarks,
     } = body;
+
+    const targetFormId = formId || 'form1';
+
+    const form = await prisma.form.findUnique({
+      where: { formId: targetFormId },
+    });
+
+    if (!form) {
+      return NextResponse.json(
+        { error: 'フォームが見つかりません' },
+        { status: 404 }
+      );
+    }
+
+    if (form.status !== '実施中') {
+      return NextResponse.json(
+        { error: 'このフォームは現在回答受付を終了しています' },
+        { status: 403 }
+      );
+    }
 
     // バリデーション
     if (!lastName || !firstName || !classValue || !eventDates || eventDates.length === 0 || !companionStatus || typeof hasAllergy !== 'boolean') {
@@ -68,6 +89,7 @@ export async function POST(request: NextRequest) {
         firstName,
         maidenName: maidenName || null,
         class: classValue,
+        formId: targetFormId,
         eventMay3,
         eventSep20,
         notAttending,

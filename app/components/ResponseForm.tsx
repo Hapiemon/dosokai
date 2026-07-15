@@ -2,7 +2,11 @@
 
 import { useState, FormEvent } from 'react';
 
-export default function ResponseForm() {
+type ResponseFormProps = {
+  formId?: string;
+};
+
+export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
   const [formData, setFormData] = useState({
     lastName: '',
     firstName: '',
@@ -80,6 +84,7 @@ export default function ResponseForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          formId,
           lastName: formData.lastName,
           firstName: formData.firstName,
           maidenName: formData.maidenName || null,
