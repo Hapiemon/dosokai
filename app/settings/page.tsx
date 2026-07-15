@@ -204,8 +204,12 @@ export default function SettingsPage() {
       const link = document.createElement('a');
       link.href = url;
       const contentDisposition = response.headers.get('Content-Disposition') || '';
-      const fileNameMatch = contentDisposition.match(/filename="?([^";]+)"?/);
-      link.download = fileNameMatch?.[1] || `${selectedFormId}-responses.csv`;
+      const fileNameUtf8Match = contentDisposition.match(/filename\*=UTF-8''([^;]+)/i);
+      const fileNameMatch = contentDisposition.match(/filename="?([^";]+)"?/i);
+      const fileName = fileNameUtf8Match?.[1]
+        ? decodeURIComponent(fileNameUtf8Match[1])
+        : fileNameMatch?.[1] || `${selectedFormId}-responses.csv`;
+      link.download = fileName;
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -437,35 +441,6 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {responses.length > 0 && (
-                <div className="mt-8 pt-6 border-t">
-                  <h2 className="text-xl font-bold text-gray-800 mb-4">📊 統計</h2>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-blue-600">{responses.length}</div>
-                      <div className="text-sm text-gray-600">合計回答数</div>
-                    </div>
-                    <div className="bg-pink-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-pink-600">
-                        {responses.filter((item) => item.eventMay3 === 1).length}
-                      </div>
-                      <div className="text-sm text-gray-600">5月3日参加</div>
-                    </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-green-600">
-                        {responses.filter((item) => item.eventSep20 === 1).length}
-                      </div>
-                      <div className="text-sm text-gray-600">9月20日参加</div>
-                    </div>
-                    <div className="bg-red-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-red-600">
-                        {responses.filter((item) => item.notAttending === 1).length}
-                      </div>
-                      <div className="text-sm text-gray-600">不参加</div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </div>
