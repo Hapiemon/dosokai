@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
 // すべてのフォーム一覧を取得
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     await prisma.form.upsert({
       where: { formId: 'form1' },
