@@ -2,8 +2,20 @@ import ResponseForm from '@/app/components/ResponseForm';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
+import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ id: string }> }
+): Promise<Metadata> {
+  const { id } = await params;
+  const form = await prisma.form.findUnique({ where: { formId: id } });
+
+  return {
+    title: form?.title || `${id} アンケート`,
+  };
+}
 
 export default async function FormPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

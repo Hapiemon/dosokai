@@ -1,8 +1,13 @@
 import ResponseForm from '@/app/components/ResponseForm';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
+import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: '第1回アンケート',
+};
 
 export default async function Form1Page() {
   const form = await prisma.form.findUnique({ where: { formId: 'form1' } });
