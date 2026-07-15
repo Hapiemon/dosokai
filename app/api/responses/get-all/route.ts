@@ -1,13 +1,10 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from 'next/server';
+import { getResponsesByForm } from '@/lib/responseManager';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const responses = await prisma.response.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
+    const formId = request.nextUrl.searchParams.get('formId') || 'form1';
+    const responses = await getResponsesByForm(formId);
 
     return NextResponse.json(responses, { status: 200 });
   } catch (error) {

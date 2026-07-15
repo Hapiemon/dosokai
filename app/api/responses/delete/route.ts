@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { deleteResponsesByForm } from '@/lib/responseManager';
 
 export async function POST(request: NextRequest) {
   try {
-    const { ids } = await request.json();
+    const { ids, formId = 'form1' } = await request.json();
 
     if (!Array.isArray(ids) || ids.length === 0) {
       return NextResponse.json(
@@ -21,13 +21,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 指定されたIDのレコードを削除
-    const result = await prisma.response.deleteMany({
-      where: {
-        id: {
-          in: ids,
-        },
-      },
-    });
+    const result = await deleteResponsesByForm(formId, ids);
 
     return NextResponse.json(
       { message: `${result.count}件のレコードを削除しました`, deletedCount: result.count },
