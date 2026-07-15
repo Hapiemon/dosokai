@@ -23,10 +23,31 @@ function escapeCsv(value: string | number | null | undefined) {
   return `"${normalized.replace(/"/g, '""')}"`;
 }
 
+function buildTimestampForFileName() {
+  const jstNow = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  const year = jstNow.getUTCFullYear();
+  const month = String(jstNow.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(jstNow.getUTCDate()).padStart(2, '0');
+  const hour = String(jstNow.getUTCHours()).padStart(2, '0');
+  const minute = String(jstNow.getUTCMinutes()).padStart(2, '0');
+
+  return `${year}${month}${day}${hour}${minute}`;
+}
+
+function buildSurveyLabel(formId: string) {
+  const match = formId.match(/^form(\d+)$/);
+  if (match) {
+    return `第${match[1]}回アンケート`;
+  }
+
+  return `${formId}_アンケート`;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const formId = request.nextUrl.searchParams.get('formId') || 'form1';
     const responses = await getResponsesByForm(formId);
+    const fileName = `${buildSurveyLabel(formId)}_${buildTimestampForFileName()}.csv`;
 
     const rows = responses.map((item) => [
       item.lastName,
@@ -53,7 +74,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': `attachment; filename="${formId}-responses.csv"`,
+        'Content-Disposition': `attachment; filename="${fileName}"`,
       },
     });
   } catch (error) {

@@ -203,7 +203,9 @@ export default function SettingsPage() {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${selectedFormId}-responses.csv`;
+      const contentDisposition = response.headers.get('Content-Disposition') || '';
+      const fileNameMatch = contentDisposition.match(/filename="?([^";]+)"?/);
+      link.download = fileNameMatch?.[1] || `${selectedFormId}-responses.csv`;
       document.body.appendChild(link);
       link.click();
       link.remove();
