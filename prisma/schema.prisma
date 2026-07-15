@@ -41,3 +41,23 @@ model Response {
 
   @@map("responses")
 }
+
+model ResponseForm2 {
+  id                String   @id @default(cuid())
+  lastName          String   // 姓
+  firstName         String   // 名
+  maidenName        String?  // 旧姓
+  class             String   // 1, 2, 3, 4, 不明
+  eventMay3         Int      // 2026年5月3日参加: 0=参加しない, 1=参加する
+  eventSep20        Int      // 2026年9月20日参加: 0=参加しない, 1=参加する
+  notAttending      Int      @default(0) // 不参加: 0=不参加ではない, 1=不参加
+  companionStatus   String   // 無し, 有り
+  companionAdults   Int?     // 同伴者(大人)
+  companionChildren Int?     // 同伴者(子供)
+  hasAllergy        Boolean
+  allergyDetails    String?  // アレルギーの詳細
+  remarks           String?  // 備考
+  createdAt         DateTime @default(now())
+
+  @@map("responses_form2")
+}
