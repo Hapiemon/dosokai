@@ -199,7 +199,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                   <>
                     <p className="ml-4">形式：着席</p>
                     <p className="ml-4">ドレスコード：なし</p>
-                    <p className="ml-4">参加費：3,800円（会費はありません）</p>
+                    <p className="ml-4">参加費：3,800円</p>
                     <p className="ml-4">集金方法：当日現金 もしくは オンライン送金（PayPay）</p>
                     <p className="ml-4">キャンセルポリシー：現在交渉中のため、後日ご案内します。</p>
                   </>
