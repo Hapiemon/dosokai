@@ -57,7 +57,6 @@ export default function Home() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <h2 className="text-xl font-bold text-gray-800 mb-2">{form.title}</h2>
-                    <p className="text-sm text-gray-500">ID: {form.formId}</p>
                   </div>
 
                   <div

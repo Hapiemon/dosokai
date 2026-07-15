@@ -14,6 +14,16 @@ export async function GET() {
       },
     });
 
+    await prisma.form.upsert({
+      where: { formId: 'form2' },
+      update: {},
+      create: {
+        formId: 'form2',
+        title: '🌸 同窓会のご案内（2026/9/20開催）🌸',
+        status: '実施中',
+      },
+    });
+
     const forms = await prisma.form.findMany({
       orderBy: { createdAt: 'asc' },
     });

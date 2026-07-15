@@ -7,6 +7,8 @@ type ResponseFormProps = {
 };
 
 export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
+  const isForm2 = formId === 'form2';
+
   const [formData, setFormData] = useState({
     lastName: '',
     firstName: '',
@@ -23,6 +25,8 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const submitEndpoint = isForm2 ? '/api/responses-form2' : '/api/responses';
 
   // バリデーション関数
   const validateForm = (): string | null => {
@@ -78,7 +82,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
     }
 
     try {
-      const response = await fetch('/api/responses', {
+      const response = await fetch(submitEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,8 +137,12 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
           <div className="text-center mb-8 border-b pb-6">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">🌸 同窓会のご案内 🌸</h1>
             <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、アンケートへご協力ください。</p>
-            <p className="text-gray-600 mb-2">集計結果によって開催日程を決定します。</p>
-            <p className="text-sm text-red-600 font-semibold">※回答期限:2026年2月15日(日)</p>
+            <p className="text-gray-600 mb-2">
+              {isForm2 ? '開催内容をご確認のうえ、参加可否をご回答ください。' : '集計結果によって開催日程を決定します。'}
+            </p>
+            <p className="text-sm text-red-600 font-semibold">
+              {isForm2 ? '※回答期限:2026年7月26日(日)' : '※回答期限:2026年2月15日(日)'}
+            </p>
           </div>
 
           {/* イベント詳細 */}
@@ -143,23 +151,43 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             <div className="space-y-4 text-gray-700">
               <div className="space-y-2">
                 <p className="font-semibold text-pink-600 mb-2">開催日程</p>
-                <label className="flex items-center ml-2">
-                  <span className="text-base">案1:2026年5月3日(日)</span>
-                </label>
-                <label className="flex items-center ml-2">
-                  <span className="text-base">案2:2026年9月20日(日)</span>
-                </label>
+                {isForm2 ? (
+                  <label className="flex items-center ml-2">
+                    <span className="text-base">2026年9月20日(日)</span>
+                  </label>
+                ) : (
+                  <>
+                    <label className="flex items-center ml-2">
+                      <span className="text-base">案1:2026年5月3日(日)</span>
+                    </label>
+                    <label className="flex items-center ml-2">
+                      <span className="text-base">案2:2026年9月20日(日)</span>
+                    </label>
+                  </>
+                )}
               </div>
               <div>
                 <p className="font-semibold">📍 場所</p>
-                <p className="ml-4">サクラマチ熊本 RHCカフェ</p>
-                <p className="ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/rhcronherman_cafe" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">お店の詳細</a></p>
+                <p className="ml-4">{isForm2 ? 'サクラマチ屋上 Cafe & Garden Bar クラック' : 'サクラマチ熊本 RHCカフェ'}</p>
+                {!isForm2 && (
+                  <p className="ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/rhcronherman_cafe" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">お店の詳細</a></p>
+                )}
               </div>
               <div>
                 <p className="font-semibold">🕐 時間</p>
-                <p className="ml-4">受付：17:30</p>
-                <p className="ml-4">開始：18:00</p>
-                <p className="ml-4">終了：20:00</p>
+                {isForm2 ? (
+                  <>
+                    <p className="ml-4">受付開始：16:00</p>
+                    <p className="ml-4">同窓会開始：16:30</p>
+                    <p className="ml-4">終了：18:30</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="ml-4">受付：17:30</p>
+                    <p className="ml-4">開始：18:00</p>
+                    <p className="ml-4">終了：20:00</p>
+                  </>
+                )}
               </div>
               <div>
                 <p className="font-semibold">💰 形式・予算</p>
@@ -235,33 +263,35 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 開催日程 */}
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">
-                参加可能な日程を選択してください <span className="text-red-600">*</span>
+                {isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください'} <span className="text-red-600">*</span>
               </label>
               <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
-                <label className="flex items-start">
-                  <input
-                    type="checkbox"
-                    value="5月3日"
-                    checked={formData.eventDates.includes('5月3日')}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFormData({
-                          ...formData,
-                          eventDates: [...formData.eventDates.filter((d) => d !== '不参加'), '5月3日'],
-                        });
-                      } else {
-                        setFormData({
-                          ...formData,
-                          eventDates: formData.eventDates.filter((d) => d !== '5月3日'),
-                        });
-                      }
-                    }}
-                    className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
-                  />
-                  <div>
-                    <span className="font-semibold">2026年5月3日(日)</span>
-                  </div>
-                </label>
+                {!isForm2 && (
+                  <label className="flex items-start">
+                    <input
+                      type="checkbox"
+                      value="5月3日"
+                      checked={formData.eventDates.includes('5月3日')}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setFormData({
+                            ...formData,
+                            eventDates: [...formData.eventDates.filter((d) => d !== '不参加'), '5月3日'],
+                          });
+                        } else {
+                          setFormData({
+                            ...formData,
+                            eventDates: formData.eventDates.filter((d) => d !== '5月3日'),
+                          });
+                        }
+                      }}
+                      className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
+                    />
+                    <div>
+                      <span className="font-semibold">2026年5月3日(日)</span>
+                    </div>
+                  </label>
+                )}
                 <label className="flex items-start">
                   <input
                     type="checkbox"
