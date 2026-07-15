@@ -10,6 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Form {
+  id        String   @id @default(cuid())
+  formId    String   @unique // "form1", "form2" など
+  title     String   // フォームのタイトル
+  status    String   @default("実施中") // "実施中" または "終了"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("forms")
+}
+
 model Response {
   id                String   @id @default(cuid())
   lastName          String   // 姓
@@ -25,6 +36,7 @@ model Response {
   hasAllergy        Boolean
   allergyDetails    String?  // アレルギーの詳細
   remarks           String?  // 備考
+  formId            String   @default("form1") // どのフォームへの応答か
   createdAt         DateTime @default(now())
 
   @@map("responses")
