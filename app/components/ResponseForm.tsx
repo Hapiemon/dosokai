@@ -169,7 +169,9 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
               <div>
                 <p className="font-semibold">📍 場所</p>
                 <p className="ml-4">{isForm2 ? 'サクラマチ屋上 Cafe & Garden Bar クラック' : 'サクラマチ熊本 RHCカフェ'}</p>
-                {!isForm2 && (
+                {isForm2 ? (
+                  <p className="ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/cafegardenbar-craic" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">会場サイト</a></p>
+                ) : (
                   <p className="ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/rhcronherman_cafe" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">お店の詳細</a></p>
                 )}
               </div>
@@ -191,8 +193,20 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
               </div>
               <div>
                 <p className="font-semibold">💰 形式・予算</p>
-                <p className="ml-4">立食形式</p>
-                <p className="ml-4">会費:5,000円前後予定</p>
+                {isForm2 ? (
+                  <>
+                    <p className="ml-4">形式：着席</p>
+                    <p className="ml-4">ドレスコード：なし</p>
+                    <p className="ml-4">参加費：3,800円（会費はありません）</p>
+                    <p className="ml-4">集金方法：当日現金 もしくは オンライン送金（PayPay）</p>
+                    <p className="ml-4">キャンセルポリシー：現在交渉中のため、後日ご案内します。</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="ml-4">立食形式</p>
+                    <p className="ml-4">会費:5,000円前後予定</p>
+                  </>
+                )}
               </div>
             </div>
           </div>
