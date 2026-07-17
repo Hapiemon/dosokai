@@ -180,7 +180,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 )}
               </div>
               <div>
-                <p className="font-semibold">📍 場所</p>
+                <p className="font-semibold text-pink-600 mb-2">場所</p>
                 <p className="ml-3 sm:ml-4 text-sm sm:text-base">{isForm2 ? 'サクラマチ屋上 Cafe & Garden Bar クラック' : 'サクラマチ熊本 RHCカフェ'}</p>
                 {isForm2 ? (
                   <p className="ml-3 sm:ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/cafegardenbar-craic" className="text-pink-600 underline text-sm sm:text-base" target="_blank" rel="noopener noreferrer">会場サイト</a></p>
@@ -189,7 +189,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 )}
               </div>
               <div>
-                <p className="font-semibold">🕐 時間</p>
+                <p className="font-semibold text-pink-600 mb-2">時間</p>
                 {isForm2 ? (
                   <>
                     <p className="ml-3 sm:ml-4 text-sm sm:text-base">受付開始：16:00</p>
@@ -205,7 +205,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 )}
               </div>
               <div>
-                <p className="font-semibold">💰 形式・予算</p>
+                <p className="font-semibold text-pink-600 mb-2">形式・予算</p>
                 {isForm2 ? (
                   <>
                     <p className="ml-3 sm:ml-4 text-sm sm:text-base">形式：着席</p>
