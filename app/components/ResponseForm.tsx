@@ -209,10 +209,10 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 {isForm2 ? (
                   <>
                     <p className="ml-3 sm:ml-4 text-sm sm:text-base">形式：着席</p>
-                    <p className="ml-4">ドレスコード：なし</p>
-                    <p className="ml-4">参加費：3,800円</p>
-                    <p className="ml-4">集金方法：当日現金 もしくは オンライン送金（PayPay）</p>
-                    <p className="ml-4">キャンセルポリシー：現在交渉中のため、後日ご案内します。</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">ドレスコード：なし</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">参加費：3,800円</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">集金方法：当日現金 もしくは オンライン送金（PayPay）</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">キャンセルポリシー：現在交渉中のため、後日ご案内します。</p>
                   </>
                 ) : (
                   <>
@@ -225,7 +225,8 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
           </div>
 
           {/* フォーム */}
-          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7">
+            <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5 space-y-5 sm:space-y-6' : 'space-y-5 sm:space-y-6'}>
             {/* 姓 */}
             <div>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
@@ -300,9 +301,10 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 <option value="不明">不明</option>
               </select>
             </div>
+            </div>
 
             {/* 開催日程 */}
-            <div>
+            <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
                 {isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください'} <span className="text-red-600">*</span>
               </label>
@@ -388,7 +390,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             </div>
 
             {/* アレルギー */}
-            <div>
+            <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
                 食べ物のアレルギーの有無 <span className="text-red-600">*</span>
               </label>
@@ -426,7 +428,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             </div>
 
             {/* 同伴者 */}
-            <div>
+            <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
                 同伴者の有無（お子さん歓迎） <span className="text-red-600">*</span>
               </label>
@@ -504,7 +506,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             </div>
 
             {/* 備考 */}
-            <div>
+            <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                 備考欄(任意)
               </label>
