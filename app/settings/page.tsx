@@ -429,27 +429,27 @@ export default function SettingsPage() {
                             className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                           />
                         </th>
-                        <th className="sticky top-0 z-15 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: columnWidths.checkbox, width: columnWidths.lastName }}>姓</th>
-                        <th className="sticky top-0 z-15 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName }}>名</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">旧姓</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">電話番号</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">3年時クラス</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">5月3日参加</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">9月20日参加</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">不参加</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">同伴者有無</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">同伴者(大人)</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">同伴者(子供)</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">アレルギー有無</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">アレルギー詳細</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">備考</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">回答日時</th>
+                        <th className="sticky top-0 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: columnWidths.checkbox, width: columnWidths.lastName, zIndex: 15 }}>姓</th>
+                        <th className="sticky top-0 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName, zIndex: 15 }}>名</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>旧姓</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>電話番号</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>3年時クラス</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>5月3日参加</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>9月20日参加</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>不参加</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>同伴者有無</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>同伴者(大人)</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>同伴者(子供)</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>アレルギー有無</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>アレルギー詳細</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>備考</th>
+                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>回答日時</th>
                       </tr>
                     </thead>
                     <tbody>
                       {responses.map((item) => (
                         <tr key={item.id} className="group hover:bg-gray-50">
-                          <td className="sticky left-0 z-10 border border-gray-300 bg-white p-1 sm:p-2 group-hover:bg-gray-50" style={{ width: columnWidths.checkbox }}>
+                          <td className="sticky left-0 z-10 border border-gray-300 bg-white p-1 sm:p-2 group-hover:bg-gray-50" style={{ width: columnWidths.checkbox, zIndex: 10 }}>
                             <input
                               type="checkbox"
                               checked={selectedIds.has(item.id)}
@@ -457,8 +457,8 @@ export default function SettingsPage() {
                               className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                             />
                           </td>
-                          <td className="sticky z-5 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ left: columnWidths.checkbox, width: columnWidths.lastName }}>{item.lastName}</td>
-                          <td className="sticky z-5 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName }}>{item.firstName}</td>
+                          <td className="sticky border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ left: columnWidths.checkbox, width: columnWidths.lastName, zIndex: 5 }}>{item.lastName}</td>
+                          <td className="sticky border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName, zIndex: 5 }}>{item.firstName}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.maidenName || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.phone || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.class}</td>
