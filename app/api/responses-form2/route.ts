@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
         companionChildren: companionStatus === '有り' ? Number(companionChildren) : null,
         settlementAmount,
         paymentMethod: null,
-        settlementStatus: null,
+        settlementStatus: '未',
         hasAllergy,
         allergyDetails: allergyDetails || null,
         remarks: remarks || null,

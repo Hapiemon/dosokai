@@ -56,7 +56,7 @@ model ResponseForm2 {
   companionChildren Int?     // 同伴者(子供)
   settlementAmount  Int      @default(0) // 精算金額
   paymentMethod     String?  // 支払い方法
-  settlementStatus  String?  // 精算ステータス
+  settlementStatus  String   @default("未") // 精算ステータス
   hasAllergy        Boolean
   allergyDetails    String?  // アレルギーの詳細
   remarks           String?  // 備考
