@@ -230,7 +230,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 姓 */}
             <div>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                姓 <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                姓 <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
@@ -244,7 +244,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 名 */}
             <div>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                名 <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                名 <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
@@ -272,7 +272,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 電話番号 */}
             <div>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                電話番号 <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                電話番号 <span className="text-red-600">*</span>
               </label>
               <input
                 type="tel"
@@ -286,7 +286,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 組 */}
             <div>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                3年生の時の組 <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                3年生の時の組 <span className="text-red-600">*</span>
               </label>
               <select
                 value={formData.class}
@@ -306,7 +306,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 開催日程 */}
             <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
-                {isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください'} <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                {isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください'} <span className="text-red-600">*</span>
               </label>
               <div className="space-y-3 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg">
                 {!isForm2 && (
@@ -392,7 +392,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* アレルギー */}
             <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
-                食べ物のアレルギーの有無 <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                食べ物のアレルギーの有無 <span className="text-red-600">*</span>
               </label>
               <div className="space-y-2 sm:space-y-3">
                 <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
@@ -430,7 +430,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 同伴者 */}
             <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
-                同伴者の有無（お子さん歓迎） <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                同伴者の有無（お子さん歓迎） <span className="text-red-600">*</span>
               </label>
               <div className="space-y-2 sm:space-y-3">
                 <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
@@ -466,7 +466,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 <div className="mt-4 space-y-4">
                   <div>
                     <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                      大人の人数 <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                      大人の人数 <span className="text-red-600">*</span>
                       <span className="ml-2 text-xs text-gray-500">※参加費がかかります。</span>
                     </label>
                     <select
@@ -485,7 +485,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
 
                   <div>
                     <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                      子供の人数 <span className="ml-2 inline-flex items-center rounded bg-red-600 px-2 py-0.5 text-[10px] sm:text-xs font-bold text-white">必須</span>
+                      子供の人数 <span className="text-red-600">*</span>
                       <span className="ml-2 text-xs text-gray-500">※無料</span>
                     </label>
                     <select
