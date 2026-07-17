@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getResponsesByForm } from '@/lib/responseManager';
 
-const CSV_HEADERS = [
+const FORM1_CSV_HEADERS = [
   '姓',
   '名',
   '旧姓',
@@ -13,6 +13,25 @@ const CSV_HEADERS = [
   '同伴者有無',
   '同伴者(大人)',
   '同伴者(子供)',
+  'アレルギー有無',
+  'アレルギー詳細',
+  '備考',
+  '回答日時',
+];
+
+const FORM2_CSV_HEADERS = [
+  '姓',
+  '名',
+  '旧姓',
+  '電話番号',
+  '3年時クラス',
+  '参加可否',
+  '同伴者有無',
+  '同伴者(大人)',
+  '同伴者(子供)',
+  '精算金額',
+  '支払い方法',
+  '精算ステータス',
   'アレルギー有無',
   'アレルギー詳細',
   '備考',
@@ -50,25 +69,50 @@ export async function GET(request: NextRequest) {
     const responses = await getResponsesByForm(formId);
     const fileName = `${buildSurveyLabel(formId)}_${buildTimestampForFileName()}.csv`;
 
-    const rows = responses.map((item) => [
-      item.lastName,
-      item.firstName,
-      item.maidenName ?? '',
-      item.phone ?? '',
-      item.class,
-      item.eventMay3 === 1 ? '参加' : '不参加',
-      item.eventSep20 === 1 ? '参加' : '不参加',
-      item.notAttending === 1 ? '不参加' : '-',
-      item.companionStatus,
-      item.companionAdults ?? 0,
-      item.companionChildren ?? 0,
-      item.hasAllergy ? '有り' : '無し',
-      item.allergyDetails ?? '',
-      item.remarks ?? '',
-      new Date(item.createdAt).toLocaleString('ja-JP'),
-    ]);
+    const rows = responses.map((item) => {
+      if (formId === 'form2') {
+        return [
+          item.lastName,
+          item.firstName,
+          item.maidenName ?? '',
+          item.phone ?? '',
+          item.class,
+          item.participationStatus ?? '',
+          item.companionStatus,
+          item.companionAdults ?? 0,
+          item.companionChildren ?? 0,
+          item.settlementAmount ?? 0,
+          item.paymentMethod ?? '',
+          item.settlementStatus ?? '',
+          item.hasAllergy ? '有り' : '無し',
+          item.allergyDetails ?? '',
+          item.remarks ?? '',
+          new Date(item.createdAt).toLocaleString('ja-JP'),
+        ];
+      }
 
-    const csv = [CSV_HEADERS, ...rows]
+      return [
+        item.lastName,
+        item.firstName,
+        item.maidenName ?? '',
+        item.phone ?? '',
+        item.class,
+        item.eventMay3 === 1 ? '参加' : '不参加',
+        item.eventSep20 === 1 ? '参加' : '不参加',
+        item.notAttending === 1 ? '不参加' : '-',
+        item.companionStatus,
+        item.companionAdults ?? 0,
+        item.companionChildren ?? 0,
+        item.hasAllergy ? '有り' : '無し',
+        item.allergyDetails ?? '',
+        item.remarks ?? '',
+        new Date(item.createdAt).toLocaleString('ja-JP'),
+      ];
+    });
+
+    const csvHeaders = formId === 'form2' ? FORM2_CSV_HEADERS : FORM1_CSV_HEADERS;
+
+    const csv = [csvHeaders, ...rows]
       .map((row) => row.map((cell) => escapeCsv(cell)).join(','))
       .join('\n');
 
