@@ -389,36 +389,36 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
 
             {/* アレルギー */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
                 食べ物のアレルギーの有無 <span className="text-red-600">*</span>
               </label>
-              <div className="space-y-2">
-                <label className="flex items-center">
+              <div className="space-y-2 sm:space-y-3">
+                <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                   <input
                     type="radio"
                     value="無し"
                     checked={formData.hasAllergy === '無し'}
                     onChange={(e) => setFormData({ ...formData, hasAllergy: e.target.value, allergyDetails: '' })}
-                    className="mr-2 text-pink-600 focus:ring-pink-500"
+                    className="w-5 h-5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-pink-600 focus:ring-pink-500 cursor-pointer"
                   />
-                  <span>無し</span>
+                  <span className="text-sm sm:text-base">無し</span>
                 </label>
-                <label className="flex items-center">
+                <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                   <input
                     type="radio"
                     value="有り"
                     checked={formData.hasAllergy === '有り'}
                     onChange={(e) => setFormData({ ...formData, hasAllergy: e.target.value })}
-                    className="mr-2 text-pink-600 focus:ring-pink-500"
+                    className="w-5 h-5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-pink-600 focus:ring-pink-500 cursor-pointer"
                   />
-                  <span>有り</span>
+                  <span className="text-sm sm:text-base">有り</span>
                 </label>
               </div>
               {formData.hasAllergy === '有り' && (
                 <textarea
                   value={formData.allergyDetails}
                   onChange={(e) => setFormData({ ...formData, allergyDetails: e.target.value })}
-                  className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="mt-3 w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                   rows={3}
                   placeholder="アレルギーの詳細をご記入ください"
                 />
@@ -427,11 +427,11 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
 
             {/* 同伴者 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
                 同伴者の有無（お子さん歓迎） <span className="text-red-600">*</span>
               </label>
-              <div className="space-y-2">
-                <label className="flex items-center">
+              <div className="space-y-2 sm:space-y-3">
+                <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                   <input
                     type="radio"
                     value="無し"
@@ -444,33 +444,33 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                         companionChildren: '0',
                       })
                     }
-                    className="mr-2 text-pink-600 focus:ring-pink-500"
+                    className="w-5 h-5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-pink-600 focus:ring-pink-500 cursor-pointer"
                   />
-                  <span>無し</span>
+                  <span className="text-sm sm:text-base">無し</span>
                 </label>
-                <label className="flex items-center">
+                <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                   <input
                     type="radio"
                     value="有り"
                     checked={formData.companionStatus === '有り'}
                     onChange={(e) => setFormData({ ...formData, companionStatus: e.target.value })}
-                    className="mr-2 text-pink-600 focus:ring-pink-500"
+                    className="w-5 h-5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-pink-600 focus:ring-pink-500 cursor-pointer"
                   />
-                  <span>有り</span>
+                  <span className="text-sm sm:text-base">有り</span>
                 </label>
               </div>
 
               {formData.companionStatus === '有り' && (
                 <div className="mt-4 space-y-4">
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">
+                    <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                       大人の人数 <span className="text-red-600">*</span>
                       <span className="ml-2 text-xs text-gray-500">※会費がかかります。</span>
                     </label>
                     <select
                       value={formData.companionAdults}
                       onChange={(e) => setFormData({ ...formData, companionAdults: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                     >
                       <option value="0">0名</option>
                       <option value="1">1名</option>
@@ -482,14 +482,14 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">
+                    <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                       子供の人数 <span className="text-red-600">*</span>
                       <span className="ml-2 text-xs text-gray-500">※無料</span>
                     </label>
                     <select
                       value={formData.companionChildren}
                       onChange={(e) => setFormData({ ...formData, companionChildren: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                     >
                       <option value="0">0名</option>
                       <option value="1">1名</option>
@@ -505,24 +505,24 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
 
             {/* 備考 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                 備考欄(任意)
               </label>
               <textarea
                 value={formData.remarks}
                 onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                 rows={4}
                 placeholder="不明点や要望があればご記入ください"
               />
             </div>
 
             {/* 送信ボタン */}
-            <div className="pt-4">
+            <div className="pt-4 sm:pt-6">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-base sm:text-lg"
               >
                 {isSubmitting ? '送信中...' : '送信する'}
               </button>
