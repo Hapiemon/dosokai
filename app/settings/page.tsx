@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { TouchEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 interface Form {
   id: string;
@@ -45,6 +45,36 @@ export default function SettingsPage() {
   const [deleting, setDeleting] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [columnWidths, setColumnWidths] = useState({ checkbox: 24, lastName: 80, firstName: 80 });
+  const [tableZoom, setTableZoom] = useState(1);
+  const pinchStartDistanceRef = useRef(0);
+  const pinchStartZoomRef = useRef(1);
+
+  const getTouchDistance = (touches: TouchEvent['touches']) => {
+    if (touches.length < 2) return 0;
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.hypot(dx, dy);
+  };
+
+  const handleTableTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    if (event.touches.length !== 2) return;
+    pinchStartDistanceRef.current = getTouchDistance(event.touches);
+    pinchStartZoomRef.current = tableZoom;
+  };
+
+  const handleTableTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+    if (event.touches.length !== 2 || pinchStartDistanceRef.current === 0) return;
+    event.preventDefault();
+    const currentDistance = getTouchDistance(event.touches);
+    const nextZoom = pinchStartZoomRef.current * (currentDistance / pinchStartDistanceRef.current);
+    setTableZoom(Math.min(2, Math.max(0.8, nextZoom)));
+  };
+
+  const handleTableTouchEnd = () => {
+    if (pinchStartDistanceRef.current !== 0) {
+      pinchStartDistanceRef.current = 0;
+    }
+  };
 
   useEffect(() => {
     fetchForms();
@@ -417,8 +447,16 @@ export default function SettingsPage() {
               ) : responses.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">データがありません</div>
               ) : (
-                <div className="overflow-auto max-h-[70vh] -mx-4 sm:mx-0 px-4 sm:px-0" style={{ clipPath: 'inset(0)' }}>
-                  <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
+                <div
+                  className="overflow-auto max-h-[70vh] -mx-4 sm:mx-0 px-4 sm:px-0"
+                  style={{ clipPath: 'inset(0)', touchAction: 'pan-x pan-y' }}
+                  onTouchStart={handleTableTouchStart}
+                  onTouchMove={handleTableTouchMove}
+                  onTouchEnd={handleTableTouchEnd}
+                  onTouchCancel={handleTableTouchEnd}
+                >
+                  <div style={{ zoom: tableZoom, transformOrigin: 'top left' }}>
+                    <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
                     <thead>
                       <tr>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2" style={{ zIndex: 30 }}>
@@ -475,7 +513,8 @@ export default function SettingsPage() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                    </table>
+                  </div>
                 </div>
               )}
 
