@@ -62,6 +62,7 @@ export default function SettingsPage() {
   const [savingForm2Changes, setSavingForm2Changes] = useState(false);
   const [form2OriginalValues, setForm2OriginalValues] = useState<Record<string, Form2EditableFields>>({});
   const [dirtyForm2Ids, setDirtyForm2Ids] = useState<Set<string>>(new Set());
+
   const [tableZoom, setTableZoom] = useState(1);
   const pinchStartDistanceRef = useRef(0);
   const pinchStartZoomRef = useRef(1);
@@ -88,9 +89,7 @@ export default function SettingsPage() {
   };
 
   const handleTableTouchEnd = () => {
-    if (pinchStartDistanceRef.current !== 0) {
-      pinchStartDistanceRef.current = 0;
-    }
+    pinchStartDistanceRef.current = 0;
   };
 
   const selectedForm = useMemo(
@@ -202,7 +201,6 @@ export default function SettingsPage() {
       setSelectedIds(new Set(responses.map((item) => item.id)));
       return;
     }
-
     setSelectedIds(new Set());
   };
 
@@ -323,10 +321,10 @@ export default function SettingsPage() {
     });
   };
 
+  const hasForm2Diff = selectedFormId === 'form2' && dirtyForm2Ids.size > 0;
+
   const handleSaveForm2Changes = async () => {
-    if (selectedFormId !== 'form2') {
-      return;
-    }
+    if (selectedFormId !== 'form2') return;
 
     const targetItems = responses.filter((item) => dirtyForm2Ids.has(item.id));
     if (targetItems.length === 0) {
@@ -336,25 +334,26 @@ export default function SettingsPage() {
 
     try {
       setSavingForm2Changes(true);
+      await Promise.all(
+        targetItems.map(async (item) => {
+          const response = await fetch(`/api/responses-form2/${item.id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              participationStatus: item.participationStatus || '参加',
+              paymentMethod: item.paymentMethod || '',
+              settlementStatus: item.settlementStatus || '未',
+              remarks: item.remarks || '',
+            }),
+          });
 
-      await Promise.all(targetItems.map(async (item) => {
-        const response = await fetch(`/api/responses-form2/${item.id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            participationStatus: item.participationStatus || '参加',
-            paymentMethod: item.paymentMethod || '',
-            settlementStatus: item.settlementStatus || '未',
-            remarks: item.remarks || '',
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error('更新に失敗しました');
-        }
-      }));
+          if (!response.ok) {
+            throw new Error('更新に失敗しました');
+          }
+        })
+      );
 
       await fetchResponses('form2');
       setMessage(`${targetItems.length}件の変更を保存しました`);
@@ -366,13 +365,8 @@ export default function SettingsPage() {
     }
   };
 
-  const hasForm2Diff = selectedFormId === 'form2' && dirtyForm2Ids.size > 0;
-
   const handleDiscardForm2Changes = async () => {
-    if (selectedFormId !== 'form2') {
-      return;
-    }
-
+    if (selectedFormId !== 'form2') return;
     await fetchResponses('form2');
     setMessage('未保存の変更を破棄しました');
   };
@@ -533,6 +527,183 @@ export default function SettingsPage() {
                   </button>
                 </div>
               )}
+
+              <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <span className="text-gray-700 font-semibold text-sm sm:text-base">{selectedIds.size}件選択</span>
+                  {selectedIds.size > 0 && (
+                    <button
+                      onClick={handleDeleteSelected}
+                      disabled={deleting || savingForm2Changes}
+                      className="px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-semibold text-xs sm:text-sm w-full sm:w-auto"
+                    >
+                      {deleting ? '削除中...' : '選択した行を削除'}
+                    </button>
+                  )}
+                </div>
+                <span className="text-xs sm:text-sm text-gray-600">{selectedForm?.title ?? ''}</span>
+              </div>
+
+              {responsesLoading ? (
+                <div className="text-center py-12 text-gray-500">読み込み中...</div>
+              ) : responses.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">データがありません</div>
+              ) : (
+                <div
+                  className="overflow-auto max-h-[70vh] -mx-4 sm:mx-0 px-4 sm:px-0"
+                  style={{ clipPath: 'inset(0)', touchAction: 'pan-x pan-y' }}
+                  onTouchStart={handleTableTouchStart}
+                  onTouchMove={handleTableTouchMove}
+                  onTouchEnd={handleTableTouchEnd}
+                  onTouchCancel={handleTableTouchEnd}
+                >
+                  <div style={{ zoom: tableZoom, transformOrigin: 'top left' }}>
+                    <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
+                      <thead>
+                        <tr>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2" style={{ zIndex: 30 }}>
+                            <input
+                              type="checkbox"
+                              checked={selectedIds.size === responses.length && responses.length > 0}
+                              onChange={(e) => handleSelectAll(e.target.checked)}
+                              className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
+                            />
+                          </th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>姓</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>名</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>旧姓</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>電話番号</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>3年時クラス</th>
+                          {selectedFormId === 'form2' ? (
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>参加可否</th>
+                          ) : (
+                            <>
+                              <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>5月3日参加</th>
+                              <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>9月20日参加</th>
+                              <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>不参加</th>
+                            </>
+                          )}
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>同伴者有無</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>同伴者(大人)</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>同伴者(子供)</th>
+                          {selectedFormId === 'form2' && (
+                            <>
+                              <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>精算金額</th>
+                              <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>支払い方法</th>
+                              <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>精算ステータス</th>
+                            </>
+                          )}
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>アレルギー有無</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>アレルギー詳細</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>{selectedFormId === 'form2' ? '概要' : '備考'}</th>
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>回答日時</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {responses.map((item) => (
+                          <tr key={item.id} className="group hover:bg-gray-50">
+                            <td className="border border-gray-300 bg-white p-1 sm:p-2 group-hover:bg-gray-50">
+                              <input
+                                type="checkbox"
+                                checked={selectedIds.has(item.id)}
+                                onChange={(e) => handleSelectOne(item.id, e.target.checked)}
+                                className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
+                              />
+                            </td>
+                            <td className="border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50">{item.lastName}</td>
+                            <td className="border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50">{item.firstName}</td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.maidenName || '-'}</td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.phone || '-'}</td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.class}</td>
+                            {selectedFormId === 'form2' ? (
+                              <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
+                                <select
+                                  value={item.participationStatus || '参加'}
+                                  onChange={(e) => updateLocalForm2Row(item.id, { participationStatus: e.target.value })}
+                                  disabled={savingForm2Changes}
+                                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm bg-white"
+                                >
+                                  {PARTICIPATION_OPTIONS.map((option) => (
+                                    <option key={option} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              </td>
+                            ) : (
+                              <>
+                                <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventMay3 === 1 ? '参加' : '-'}</td>
+                                <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventSep20 === 1 ? '参加' : '-'}</td>
+                                <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.notAttending === 1 ? '不参加' : '-'}</td>
+                              </>
+                            )}
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.companionStatus}</td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.companionAdults ?? 0}</td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.companionChildren ?? 0}</td>
+                            {selectedFormId === 'form2' && (
+                              <>
+                                <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.settlementAmount ?? 0}</td>
+                                <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
+                                  <select
+                                    value={item.paymentMethod || ''}
+                                    onChange={(e) => updateLocalForm2Row(item.id, { paymentMethod: e.target.value })}
+                                    disabled={savingForm2Changes}
+                                    className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm bg-white"
+                                  >
+                                    {PAYMENT_OPTIONS.map((option) => (
+                                      <option key={option || 'empty'} value={option}>
+                                        {option || '（空欄）'}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </td>
+                                <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
+                                  <select
+                                    value={item.settlementStatus || '未'}
+                                    onChange={(e) => updateLocalForm2Row(item.id, { settlementStatus: e.target.value })}
+                                    disabled={savingForm2Changes}
+                                    className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm bg-white"
+                                  >
+                                    {SETTLEMENT_OPTIONS.map((option) => (
+                                      <option key={option} value={option}>
+                                        {option}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </td>
+                              </>
+                            )}
+                            <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.hasAllergy ? '有り' : '無し'}</td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.allergyDetails || '-'}</td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
+                              {selectedFormId === 'form2' ? (
+                                <input
+                                  type="text"
+                                  value={item.remarks || ''}
+                                  onChange={(e) => updateLocalForm2Row(item.id, { remarks: e.target.value })}
+                                  disabled={savingForm2Changes}
+                                  className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm"
+                                  placeholder="概要を入力"
+                                />
+                              ) : (
+                                item.remarks || '-'
+                              )}
+                            </td>
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs whitespace-nowrap">{formatDate(item.createdAt)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
       });
 
       if (!response.ok) {
