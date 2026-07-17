@@ -506,7 +506,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                   <div>
                     <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                       大人の人数 <span className="text-red-600">*</span>
-                      <span className="ml-2 text-xs text-gray-500">※参加費がかかります。</span>
+                      <span className="ml-2 text-xs text-gray-500">※参加費が3,800円/人かかります。</span>
                     </label>
                     <select
                       value={formData.companionAdults}
