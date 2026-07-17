@@ -44,7 +44,7 @@ export default function SettingsPage() {
   const [responsesLoading, setResponsesLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [columnWidths, setColumnWidths] = useState({ checkbox: 48, lastName: 80, firstName: 80 });
+  const [columnWidths, setColumnWidths] = useState({ checkbox: 24, lastName: 80, firstName: 80 });
 
   useEffect(() => {
     fetchForms();
@@ -74,7 +74,7 @@ export default function SettingsPage() {
     const padding = 8;
 
     setColumnWidths({
-      checkbox: 48,
+      checkbox: 24,
       lastName: Math.max(60, maxLastNameLength * charWidth + padding),
       firstName: Math.max(60, maxFirstNameLength * charWidth + padding),
     });
@@ -417,7 +417,7 @@ export default function SettingsPage() {
               ) : responses.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">データがありません</div>
               ) : (
-                <div className="overflow-auto max-h-[70vh] -mx-4 sm:mx-0 px-4 sm:px-0">
+                <div className="overflow-auto max-h-[70vh] -mx-4 sm:mx-0 px-4 sm:px-0" style={{ clipPath: 'inset(0)' }}>
                   <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
                     <thead>
                       <tr>
