@@ -67,7 +67,7 @@ export default function SettingsPage() {
     event.preventDefault();
     const currentDistance = getTouchDistance(event.touches);
     const nextZoom = pinchStartZoomRef.current * (currentDistance / pinchStartDistanceRef.current);
-    setTableZoom(Math.min(2, Math.max(0.8, nextZoom)));
+    setTableZoom(Math.min(2, Math.max(0.5, nextZoom)));
   };
 
   const handleTableTouchEnd = () => {
@@ -455,7 +455,13 @@ export default function SettingsPage() {
                   onTouchEnd={handleTableTouchEnd}
                   onTouchCancel={handleTableTouchEnd}
                 >
-                  <div style={{ zoom: tableZoom, transformOrigin: 'top left' }}>
+                  <div
+                    style={{
+                      transform: `scale(${tableZoom})`,
+                      transformOrigin: 'top left',
+                      width: `${100 / tableZoom}%`,
+                    }}
+                  >
                     <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
                     <thead>
                       <tr>
