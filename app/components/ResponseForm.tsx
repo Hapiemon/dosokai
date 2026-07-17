@@ -303,12 +303,12 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
 
             {/* 開催日程 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
                 {isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください'} <span className="text-red-600">*</span>
               </label>
-              <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
+              <div className="space-y-3 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg">
                 {!isForm2 && (
-                  <label className="flex items-start">
+                  <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                     <input
                       type="checkbox"
                       value="5月3日"
@@ -326,14 +326,14 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                           });
                         }
                       }}
-                      className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
+                      className="mr-2 sm:mr-3 mt-1 w-5 h-5 sm:w-4 sm:h-4 text-pink-600 focus:ring-pink-500 cursor-pointer"
                     />
                     <div>
-                      <span className="font-semibold">2026年5月3日(日)</span>
+                      <span className="font-semibold text-sm sm:text-base">2026年5月3日(日)</span>
                     </div>
                   </label>
                 )}
-                <label className="flex items-start">
+                <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                   <input
                     type="checkbox"
                     value="9月20日"
@@ -351,13 +351,13 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                         });
                       }
                     }}
-                    className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
+                    className="mr-2 sm:mr-3 mt-1 w-5 h-5 sm:w-4 sm:h-4 text-pink-600 focus:ring-pink-500 cursor-pointer"
                   />
                   <div>
-                    <span className="font-semibold">2026年9月20日(日)</span>
+                    <span className="font-semibold text-sm sm:text-base">2026年9月20日(日)</span>
                   </div>
                 </label>
-                <label className="flex items-start">
+                <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                   <input
                     type="checkbox"
                     value="不参加"
@@ -375,10 +375,10 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                         });
                       }
                     }}
-                    className="mr-3 mt-1 text-pink-600 focus:ring-pink-500"
+                    className="mr-2 sm:mr-3 mt-1 w-5 h-5 sm:w-4 sm:h-4 text-pink-600 focus:ring-pink-500 cursor-pointer"
                   />
                   <div>
-                    <span className="font-semibold">不参加</span>
+                    <span className="font-semibold text-sm sm:text-base">不参加</span>
                   </div>
                 </label>
               </div>
