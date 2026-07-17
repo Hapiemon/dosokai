@@ -262,23 +262,19 @@ export default function SettingsPage() {
     }
   };
 
-  const handleUpdateForm2Response = async (
-    item: ResponseItem,
-    updates: {
-      participationStatus?: string;
-      paymentMethod?: string;
-      settlementStatus?: string;
-      remarks?: string;
-    }
-  ) => {
+  const updateLocalForm2Row = (id: string, updates: Partial<ResponseItem>) => {
+    setResponses((prev) => prev.map((row) => (row.id === id ? { ...row, ...updates } : row)));
+  };
+
+  const handleSaveForm2Response = async (item: ResponseItem) => {
     if (selectedFormId !== 'form2') {
       return;
     }
 
-    const nextParticipationStatus = updates.participationStatus ?? item.participationStatus ?? '参加';
-    const nextPaymentMethod = updates.paymentMethod ?? item.paymentMethod ?? '';
-    const nextSettlementStatus = updates.settlementStatus ?? item.settlementStatus ?? '未';
-    const nextRemarks = updates.remarks ?? item.remarks ?? '';
+    const nextParticipationStatus = item.participationStatus ?? '参加';
+    const nextPaymentMethod = item.paymentMethod ?? '';
+    const nextSettlementStatus = item.settlementStatus ?? '未';
+    const nextRemarks = item.remarks ?? '';
 
     try {
       setUpdatingResponseId(item.id);
@@ -301,20 +297,13 @@ export default function SettingsPage() {
       }
 
       const result = await response.json();
-      setResponses((prev) =>
-        prev.map((row) =>
-          row.id === item.id
-            ? {
-                ...row,
-                participationStatus: result.data.participationStatus,
-                paymentMethod: result.data.paymentMethod,
-                settlementStatus: result.data.settlementStatus,
-                remarks: result.data.remarks,
-                settlementAmount: result.data.settlementAmount,
-              }
-            : row
-        )
-      );
+      updateLocalForm2Row(item.id, {
+        participationStatus: result.data.participationStatus,
+        paymentMethod: result.data.paymentMethod,
+        settlementStatus: result.data.settlementStatus,
+        remarks: result.data.remarks,
+        settlementAmount: result.data.settlementAmount,
+      });
       setMessage('更新しました');
     } catch (error) {
       console.error('Error:', error);
@@ -524,6 +513,7 @@ export default function SettingsPage() {
                             <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>精算金額</th>
                             <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>支払い方法</th>
                             <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>精算ステータス</th>
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>操作</th>
                           </>
                         )}
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>アレルギー有無</th>
@@ -552,7 +542,7 @@ export default function SettingsPage() {
                             <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
                               <select
                                 value={item.participationStatus || '参加'}
-                                onChange={(e) => handleUpdateForm2Response(item, { participationStatus: e.target.value })}
+                                onChange={(e) => updateLocalForm2Row(item.id, { participationStatus: e.target.value })}
                                 disabled={updatingResponseId === item.id}
                                 className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm bg-white"
                               >
@@ -579,7 +569,7 @@ export default function SettingsPage() {
                               <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
                                 <select
                                   value={item.paymentMethod || ''}
-                                  onChange={(e) => handleUpdateForm2Response(item, { paymentMethod: e.target.value })}
+                                  onChange={(e) => updateLocalForm2Row(item.id, { paymentMethod: e.target.value })}
                                   disabled={updatingResponseId === item.id}
                                   className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm bg-white"
                                 >
@@ -593,7 +583,7 @@ export default function SettingsPage() {
                               <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
                                 <select
                                   value={item.settlementStatus || '未'}
-                                  onChange={(e) => handleUpdateForm2Response(item, { settlementStatus: e.target.value })}
+                                  onChange={(e) => updateLocalForm2Row(item.id, { settlementStatus: e.target.value })}
                                   disabled={updatingResponseId === item.id}
                                   className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm bg-white"
                                 >
@@ -614,12 +604,8 @@ export default function SettingsPage() {
                                 type="text"
                                 value={item.remarks || ''}
                                 onChange={(e) => {
-                                  const value = e.target.value;
-                                  setResponses((prev) =>
-                                    prev.map((row) => (row.id === item.id ? { ...row, remarks: value } : row))
-                                  );
+                                  updateLocalForm2Row(item.id, { remarks: e.target.value });
                                 }}
-                                onBlur={(e) => handleUpdateForm2Response(item, { remarks: e.target.value })}
                                 disabled={updatingResponseId === item.id}
                                 className="w-full px-2 py-1 border border-gray-300 rounded text-xs sm:text-sm"
                                 placeholder="概要を入力"
@@ -628,6 +614,17 @@ export default function SettingsPage() {
                               item.remarks || '-'
                             )}
                           </td>
+                          {selectedFormId === 'form2' && (
+                            <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">
+                              <button
+                                onClick={() => handleSaveForm2Response(item)}
+                                disabled={updatingResponseId === item.id}
+                                className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors disabled:bg-gray-400"
+                              >
+                                {updatingResponseId === item.id ? '保存中...' : '保存'}
+                              </button>
+                            </td>
+                          )}
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs whitespace-nowrap">{formatDate(item.createdAt)}</td>
                         </tr>
                       ))}
