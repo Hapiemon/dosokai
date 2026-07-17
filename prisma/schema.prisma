@@ -50,12 +50,13 @@ model ResponseForm2 {
   maidenName        String?  // 旧姓
   phone             String?  // 電話番号
   class             String   // 1, 2, 3, 4, 不明
-  eventMay3         Int      // 2026年5月3日参加: 0=参加しない, 1=参加する
-  eventSep20        Int      // 2026年9月20日参加: 0=参加しない, 1=参加する
-  notAttending      Int      @default(0) // 不参加: 0=不参加ではない, 1=不参加
+  participationStatus String // 参加可否: 参加, 不参加
   companionStatus   String   // 無し, 有り
   companionAdults   Int?     // 同伴者(大人)
   companionChildren Int?     // 同伴者(子供)
+  settlementAmount  Int      @default(0) // 精算金額
+  paymentMethod     String?  // 支払い方法
+  settlementStatus  String?  // 精算ステータス
   hasAllergy        Boolean
   allergyDetails    String?  // アレルギーの詳細
   remarks           String?  // 備考
