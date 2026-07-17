@@ -75,16 +75,6 @@ export default function SettingsPage() {
     }
   };
 
-  useEffect(() => {
-    fetchForms();
-  }, [fetchForms]);
-
-  useEffect(() => {
-    if (activeTab === 'responses') {
-      fetchResponses(selectedFormId);
-    }
-  }, [activeTab, fetchResponses, selectedFormId]);
-
   const selectedForm = useMemo(
     () => forms.find((item) => item.formId === selectedFormId),
     [forms, selectedFormId]
@@ -161,6 +151,16 @@ export default function SettingsPage() {
       setResponsesLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    fetchForms();
+  }, [fetchForms]);
+
+  useEffect(() => {
+    if (activeTab === 'responses') {
+      fetchResponses(selectedFormId);
+    }
+  }, [activeTab, fetchResponses, selectedFormId]);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
