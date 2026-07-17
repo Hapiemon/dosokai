@@ -18,12 +18,16 @@ interface ResponseItem {
   maidenName: string | null;
   phone: string | null;
   class: string;
-  eventMay3: number;
-  eventSep20: number;
-  notAttending: number;
+  eventMay3?: number;
+  eventSep20?: number;
+  notAttending?: number;
+  participationStatus?: string;
   companionStatus: string;
   companionAdults: number | null;
   companionChildren: number | null;
+  settlementAmount?: number;
+  paymentMethod?: string | null;
+  settlementStatus?: string | null;
   hasAllergy: boolean;
   allergyDetails: string | null;
   remarks: string | null;
@@ -436,12 +440,25 @@ export default function SettingsPage() {
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>旧姓</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>電話番号</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>3年時クラス</th>
-                        <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>5月3日参加</th>
-                        <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>9月20日参加</th>
-                        <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>不参加</th>
+                        {selectedFormId === 'form2' ? (
+                          <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>参加可否</th>
+                        ) : (
+                          <>
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>5月3日参加</th>
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>9月20日参加</th>
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>不参加</th>
+                          </>
+                        )}
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>同伴者有無</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>同伴者(大人)</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>同伴者(子供)</th>
+                        {selectedFormId === 'form2' && (
+                          <>
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>精算金額</th>
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>支払い方法</th>
+                            <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>精算ステータス</th>
+                          </>
+                        )}
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>アレルギー有無</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>アレルギー詳細</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 30 }}>備考</th>
@@ -464,12 +481,25 @@ export default function SettingsPage() {
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.maidenName || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.phone || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.class}</td>
-                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventMay3 === 1 ? '参加' : '-'}</td>
-                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventSep20 === 1 ? '参加' : '-'}</td>
-                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.notAttending === 1 ? '不参加' : '-'}</td>
+                          {selectedFormId === 'form2' ? (
+                            <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.participationStatus || '-'}</td>
+                          ) : (
+                            <>
+                              <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventMay3 === 1 ? '参加' : '-'}</td>
+                              <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventSep20 === 1 ? '参加' : '-'}</td>
+                              <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.notAttending === 1 ? '不参加' : '-'}</td>
+                            </>
+                          )}
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.companionStatus}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.companionAdults ?? 0}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.companionChildren ?? 0}</td>
+                          {selectedFormId === 'form2' && (
+                            <>
+                              <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.settlementAmount ?? 0}</td>
+                              <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.paymentMethod || '-'}</td>
+                              <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.settlementStatus || '-'}</td>
+                            </>
+                          )}
                           <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.hasAllergy ? '有り' : '無し'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.allergyDetails || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.remarks || '-'}</td>

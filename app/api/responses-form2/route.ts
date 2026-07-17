@@ -78,9 +78,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const eventMay3 = eventDates.includes('5月3日') ? 1 : 0;
-    const eventSep20 = eventDates.includes('9月20日') ? 1 : 0;
-    const notAttending = eventDates.includes('不参加') ? 1 : 0;
+    const participationStatus = eventDates.includes('不参加') ? '不参加' : '参加';
+    const adultsCount = companionStatus === '有り' ? Number(companionAdults) : 0;
+    const settlementAmount = participationStatus === '参加' ? (adultsCount + 1) * 3800 : 0;
 
     const jstDate = new Date(Date.now() + 9 * 60 * 60 * 1000);
 
@@ -91,12 +91,13 @@ export async function POST(request: NextRequest) {
         maidenName: maidenName || null,
         phone,
         class: classValue,
-        eventMay3,
-        eventSep20,
-        notAttending,
+        participationStatus,
         companionStatus,
-        companionAdults: companionStatus === '有り' ? Number(companionAdults) : null,
+        companionAdults: companionStatus === '有り' ? adultsCount : null,
         companionChildren: companionStatus === '有り' ? Number(companionChildren) : null,
+        settlementAmount,
+        paymentMethod: null,
+        settlementStatus: null,
         hasAllergy,
         allergyDetails: allergyDetails || null,
         remarks: remarks || null,
