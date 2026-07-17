@@ -52,7 +52,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
     }
 
     if (formData.eventDates.length === 0) {
-      return '参加可能な日程を選択してください';
+      return isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください';
     }
 
     if (!formData.companionStatus) {
@@ -309,7 +309,45 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 {isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください'} <span className="text-red-600">*</span>
               </label>
               <div className="space-y-3 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg">
-                {!isForm2 && (
+                {isForm2 ? (
+                  <>
+                    <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
+                      <input
+                        type="radio"
+                        value="参加"
+                        checked={formData.eventDates.includes('9月20日')}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setFormData({
+                              ...formData,
+                              eventDates: ['9月20日'],
+                            });
+                          }
+                        }}
+                        className="w-5 h-5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-pink-600 focus:ring-pink-500 cursor-pointer"
+                      />
+                      <span className="text-sm sm:text-base">参加</span>
+                    </label>
+                    <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
+                      <input
+                        type="radio"
+                        value="不参加"
+                        checked={formData.eventDates.includes('不参加')}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setFormData({
+                              ...formData,
+                              eventDates: ['不参加'],
+                            });
+                          }
+                        }}
+                        className="w-5 h-5 sm:w-4 sm:h-4 mr-2 sm:mr-3 text-pink-600 focus:ring-pink-500 cursor-pointer"
+                      />
+                      <span className="text-sm sm:text-base">不参加</span>
+                    </label>
+                  </>
+                ) : (
+                  <>
                   <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
                     <input
                       type="checkbox"
@@ -334,57 +372,58 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                       <span className="font-semibold text-sm sm:text-base">2026年5月3日(日)</span>
                     </div>
                   </label>
+                  <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
+                    <input
+                      type="checkbox"
+                      value="9月20日"
+                      checked={formData.eventDates.includes('9月20日')}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setFormData({
+                            ...formData,
+                            eventDates: [...formData.eventDates.filter((d) => d !== '不参加'), '9月20日'],
+                          });
+                        } else {
+                          setFormData({
+                            ...formData,
+                            eventDates: formData.eventDates.filter((d) => d !== '9月20日'),
+                          });
+                        }
+                      }}
+                      className="mr-2 sm:mr-3 mt-1 w-5 h-5 sm:w-4 sm:h-4 text-pink-600 focus:ring-pink-500 cursor-pointer"
+                    />
+                    <div>
+                      <span className="font-semibold text-sm sm:text-base">2026年9月20日(日)</span>
+                    </div>
+                  </label>
+                  <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
+                    <input
+                      type="checkbox"
+                      value="不参加"
+                      checked={formData.eventDates.includes('不参加')}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setFormData({
+                            ...formData,
+                            eventDates: ['不参加'],
+                          });
+                        } else {
+                          setFormData({
+                            ...formData,
+                            eventDates: formData.eventDates.filter((d) => d !== '不参加'),
+                          });
+                        }
+                      }}
+                      className="mr-2 sm:mr-3 mt-1 w-5 h-5 sm:w-4 sm:h-4 text-pink-600 focus:ring-pink-500 cursor-pointer"
+                    />
+                    <div>
+                      <span className="font-semibold text-sm sm:text-base">不参加</span>
+                    </div>
+                  </label>
+                  </>
                 )}
-                <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
-                  <input
-                    type="checkbox"
-                    value="9月20日"
-                    checked={formData.eventDates.includes('9月20日')}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFormData({
-                          ...formData,
-                          eventDates: [...formData.eventDates.filter((d) => d !== '不参加'), '9月20日'],
-                        });
-                      } else {
-                        setFormData({
-                          ...formData,
-                          eventDates: formData.eventDates.filter((d) => d !== '9月20日'),
-                        });
-                      }
-                    }}
-                    className="mr-2 sm:mr-3 mt-1 w-5 h-5 sm:w-4 sm:h-4 text-pink-600 focus:ring-pink-500 cursor-pointer"
-                  />
-                  <div>
-                    <span className="font-semibold text-sm sm:text-base">2026年9月20日(日)</span>
-                  </div>
-                </label>
-                <label className="flex items-start cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
-                  <input
-                    type="checkbox"
-                    value="不参加"
-                    checked={formData.eventDates.includes('不参加')}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFormData({
-                          ...formData,
-                          eventDates: ['不参加'],
-                        });
-                      } else {
-                        setFormData({
-                          ...formData,
-                          eventDates: formData.eventDates.filter((d) => d !== '不参加'),
-                        });
-                      }
-                    }}
-                    className="mr-2 sm:mr-3 mt-1 w-5 h-5 sm:w-4 sm:h-4 text-pink-600 focus:ring-pink-500 cursor-pointer"
-                  />
-                  <div>
-                    <span className="font-semibold text-sm sm:text-base">不参加</span>
-                  </div>
-                </label>
               </div>
-              {formData.eventDates.length === 0 && (
+              {!isForm2 && formData.eventDates.length === 0 && (
                 <p className="text-sm text-red-500 mt-2">少なくとも1つの日程を選択してください</p>
               )}
             </div>
