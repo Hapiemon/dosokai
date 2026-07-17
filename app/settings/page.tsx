@@ -303,7 +303,7 @@ export default function SettingsPage() {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
           <div className="mb-6 sm:mb-8 border-b pb-4 sm:pb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">⚙️ 設定</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">設定</h1>
             <p className="text-xs sm:text-base text-gray-600">アンケートと回答データの管理</p>
           </div>
 
@@ -322,7 +322,7 @@ export default function SettingsPage() {
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              📋 フォーム管理
+              フォーム管理
             </button>
             <button
               onClick={() => setActiveTab('responses')}
@@ -332,7 +332,7 @@ export default function SettingsPage() {
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              📊 回答管理
+              回答管理
             </button>
           </div>
 
@@ -455,13 +455,7 @@ export default function SettingsPage() {
                   onTouchEnd={handleTableTouchEnd}
                   onTouchCancel={handleTableTouchEnd}
                 >
-                  <div
-                    style={{
-                      transform: `scale(${tableZoom})`,
-                      transformOrigin: 'top left',
-                      width: `${100 / tableZoom}%`,
-                    }}
-                  >
+                  <div style={{ zoom: tableZoom, transformOrigin: 'top left' }}>
                     <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
                     <thead>
                       <tr>
