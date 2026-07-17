@@ -308,7 +308,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
                 {isForm2 ? '参加可否を選択してください' : '参加可能な日程を選択してください'} <span className="text-red-600">*</span>
               </label>
-              <div className="space-y-3 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg">
+              <div className={isForm2 ? 'space-y-2 sm:space-y-3' : 'space-y-3 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg'}>
                 {isForm2 ? (
                   <>
                     <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
@@ -469,7 +469,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 同伴者 */}
             <div className={isForm2 ? 'rounded-xl border border-gray-200 bg-gray-50/50 p-4 sm:p-5' : ''}>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-3">
-                同伴者の有無（お子さん歓迎） <span className="text-red-600">*</span>
+                同伴者の有無(お子さん歓迎) <span className="text-red-600">*</span>
               </label>
               <div className="space-y-2 sm:space-y-3">
                 <label className="flex items-center cursor-pointer p-2 sm:p-0 -mx-2 sm:mx-0 rounded hover:bg-gray-100 sm:hover:bg-transparent">
