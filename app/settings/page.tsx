@@ -234,12 +234,12 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-6 sm:py-12 px-3 sm:px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-xl p-8">
-          <div className="mb-8 border-b pb-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">⚙️ 設定</h1>
-            <p className="text-gray-600">アンケートと回答データの管理</p>
+        <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
+          <div className="mb-6 sm:mb-8 border-b pb-4 sm:pb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">⚙️ 設定</h1>
+            <p className="text-xs sm:text-base text-gray-600">アンケートと回答データの管理</p>
           </div>
 
           {message && (
@@ -248,10 +248,10 @@ export default function SettingsPage() {
             </div>
           )}
 
-          <div className="mb-6 flex gap-4 border-b">
+          <div className="mb-6 flex gap-2 sm:gap-4 border-b text-sm sm:text-base">
             <button
               onClick={() => setActiveTab('forms')}
-              className={`pb-2 px-4 font-semibold transition-colors ${
+              className={`pb-1 sm:pb-2 px-2 sm:px-4 font-semibold transition-colors text-xs sm:text-sm ${
                 activeTab === 'forms'
                   ? 'border-b-2 border-blue-600 text-blue-600'
                   : 'text-gray-600 hover:text-gray-800'
@@ -261,7 +261,7 @@ export default function SettingsPage() {
             </button>
             <button
               onClick={() => setActiveTab('responses')}
-              className={`pb-2 px-4 font-semibold transition-colors ${
+              className={`pb-1 sm:pb-2 px-2 sm:px-4 font-semibold transition-colors text-xs sm:text-sm ${
                 activeTab === 'responses'
                   ? 'border-b-2 border-blue-600 text-blue-600'
                   : 'text-gray-600 hover:text-gray-800'
@@ -273,12 +273,12 @@ export default function SettingsPage() {
 
           {activeTab === 'forms' && (
             <div>
-              <div className="mb-6 flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800">アンケートのステータス管理</h2>
+              <div className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4">
+                <h2 className="text-lg sm:text-2xl font-bold text-gray-800">アンケートのステータス管理</h2>
                 <button
                   onClick={fetchForms}
                   disabled={formsLoading}
-                  className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors disabled:bg-gray-400"
+                  className="px-3 sm:px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors disabled:bg-gray-400 text-sm sm:text-base w-full sm:w-auto"
                 >
                   更新
                 </button>
@@ -293,11 +293,11 @@ export default function SettingsPage() {
                   {forms.map((form) => (
                     <div
                       key={form.id}
-                      className="flex items-center justify-between gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-3 sm:p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
                     >
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-800">{form.title}</h3>
-                        <p className="text-sm text-gray-500 mt-1">ID: {form.formId}</p>
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-800">{form.title}</h3>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-1">ID: {form.formId}</p>
                       </div>
 
                       <div className="flex items-center gap-4">
@@ -332,12 +332,12 @@ export default function SettingsPage() {
 
           {activeTab === 'responses' && (
             <div>
-              <div className="mb-4 flex flex-wrap items-center gap-3">
-                <label className="text-sm font-semibold text-gray-700">対象フォーム</label>
+              <div className="mb-4 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                <label className="font-semibold text-gray-700">対象フォーム</label>
                 <select
                   value={selectedFormId}
                   onChange={(e) => setSelectedFormId(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg bg-white"
+                  className="px-2 sm:px-3 py-2 border border-gray-300 rounded-lg bg-white text-xs sm:text-sm"
                 >
                   {forms.map((form) => (
                     <option key={form.formId} value={form.formId}>
@@ -348,33 +348,33 @@ export default function SettingsPage() {
                 <button
                   onClick={() => fetchResponses(selectedFormId)}
                   disabled={responsesLoading}
-                  className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors disabled:bg-gray-400"
+                  className="px-3 sm:px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors disabled:bg-gray-400 text-xs sm:text-sm"
                 >
                   更新
                 </button>
                 <button
                   onClick={handleExportCsv}
                   disabled={exporting || responsesLoading}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors disabled:bg-gray-400 font-semibold"
+                  className="px-3 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors disabled:bg-gray-400 font-semibold text-xs sm:text-sm"
                 >
                   {exporting ? '出力中...' : 'CSVエクスポート'}
                 </button>
               </div>
 
-              <div className="mb-6 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <span className="text-gray-700 font-semibold">{selectedIds.size}件選択</span>
+              <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <span className="text-gray-700 font-semibold text-sm sm:text-base">{selectedIds.size}件選択</span>
                   {selectedIds.size > 0 && (
                     <button
                       onClick={handleDeleteSelected}
                       disabled={deleting}
-                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-semibold"
+                      className="px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed font-semibold text-xs sm:text-sm w-full sm:w-auto"
                     >
                       {deleting ? '削除中...' : '選択した行を削除'}
                     </button>
                   )}
                 </div>
-                <span className="text-sm text-gray-600">{selectedForm?.title ?? ''}</span>
+                <span className="text-xs sm:text-sm text-gray-600">{selectedForm?.title ?? ''}</span>
               </div>
 
               {responsesLoading ? (
@@ -382,61 +382,61 @@ export default function SettingsPage() {
               ) : responses.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">データがありません</div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-gray-300 text-sm">
+                <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+                  <table className="w-full border-collapse border border-gray-300 text-xs sm:text-sm">
                     <thead>
                       <tr className="bg-gray-100">
-                        <th className="border border-gray-300 p-2">
+                        <th className="border border-gray-300 p-1 sm:p-2">
                           <input
                             type="checkbox"
                             checked={selectedIds.size === responses.length && responses.length > 0}
                             onChange={(e) => handleSelectAll(e.target.checked)}
-                            className="cursor-pointer"
+                            className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                           />
                         </th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">姓</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">名</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">旧姓</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">電話番号</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">3年時クラス</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">5月3日参加</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">9月20日参加</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">不参加</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">同伴者有無</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">同伴者(大人)</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">同伴者(子供)</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">アレルギー有無</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">アレルギー詳細</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">備考</th>
-                        <th className="border border-gray-300 p-2 text-left font-semibold">回答日時</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">姓</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">名</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">旧姓</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">電話番号</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">3年時クラス</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">5月3日参加</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">9月20日参加</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">不参加</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">同伴者有無</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">同伴者(大人)</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">同伴者(子供)</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">アレルギー有無</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">アレルギー詳細</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">備考</th>
+                        <th className="border border-gray-300 p-1 sm:p-2 text-left font-semibold">回答日時</th>
                       </tr>
                     </thead>
                     <tbody>
                       {responses.map((item) => (
                         <tr key={item.id} className="hover:bg-gray-50">
-                          <td className="border border-gray-300 p-2">
+                          <td className="border border-gray-300 p-1 sm:p-2">
                             <input
                               type="checkbox"
                               checked={selectedIds.has(item.id)}
                               onChange={(e) => handleSelectOne(item.id, e.target.checked)}
-                              className="cursor-pointer"
+                              className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                             />
                           </td>
-                          <td className="border border-gray-300 p-2">{item.lastName}</td>
-                          <td className="border border-gray-300 p-2">{item.firstName}</td>
-                          <td className="border border-gray-300 p-2">{item.maidenName || '-'}</td>
-                          <td className="border border-gray-300 p-2">{item.phone || '-'}</td>
-                          <td className="border border-gray-300 p-2">{item.class}</td>
-                          <td className="border border-gray-300 p-2 text-center">{item.eventMay3 === 1 ? '参加' : '-'}</td>
-                          <td className="border border-gray-300 p-2 text-center">{item.eventSep20 === 1 ? '参加' : '-'}</td>
-                          <td className="border border-gray-300 p-2 text-center">{item.notAttending === 1 ? '不参加' : '-'}</td>
-                          <td className="border border-gray-300 p-2">{item.companionStatus}</td>
-                          <td className="border border-gray-300 p-2 text-center">{item.companionAdults ?? 0}</td>
-                          <td className="border border-gray-300 p-2 text-center">{item.companionChildren ?? 0}</td>
-                          <td className="border border-gray-300 p-2 text-center">{item.hasAllergy ? '有り' : '無し'}</td>
-                          <td className="border border-gray-300 p-2">{item.allergyDetails || '-'}</td>
-                          <td className="border border-gray-300 p-2">{item.remarks || '-'}</td>
-                          <td className="border border-gray-300 p-2 text-xs whitespace-nowrap">{formatDate(item.createdAt)}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.lastName}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.firstName}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.maidenName || '-'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.phone || '-'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.class}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventMay3 === 1 ? '参加' : '-'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.eventSep20 === 1 ? '参加' : '-'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.notAttending === 1 ? '不参加' : '-'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.companionStatus}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.companionAdults ?? 0}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.companionChildren ?? 0}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-center text-xs sm:text-sm">{item.hasAllergy ? '有り' : '無し'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.allergyDetails || '-'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.remarks || '-'}</td>
+                          <td className="border border-gray-300 p-1 sm:p-2 text-xs whitespace-nowrap">{formatDate(item.createdAt)}</td>
                         </tr>
                       ))}
                     </tbody>
