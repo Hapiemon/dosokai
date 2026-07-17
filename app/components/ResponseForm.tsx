@@ -278,7 +278,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
-                placeholder="09012345678 または 090-1234-5678"
+                placeholder="09012345678"
               />
             </div>
 
