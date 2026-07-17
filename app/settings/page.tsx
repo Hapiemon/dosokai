@@ -16,6 +16,7 @@ interface ResponseItem {
   lastName: string;
   firstName: string;
   maidenName: string | null;
+  phone: string | null;
   class: string;
   eventMay3: number;
   eventSep20: number;
@@ -396,6 +397,7 @@ export default function SettingsPage() {
                         <th className="border border-gray-300 p-2 text-left font-semibold">姓</th>
                         <th className="border border-gray-300 p-2 text-left font-semibold">名</th>
                         <th className="border border-gray-300 p-2 text-left font-semibold">旧姓</th>
+                        <th className="border border-gray-300 p-2 text-left font-semibold">電話番号</th>
                         <th className="border border-gray-300 p-2 text-left font-semibold">3年時クラス</th>
                         <th className="border border-gray-300 p-2 text-left font-semibold">5月3日参加</th>
                         <th className="border border-gray-300 p-2 text-left font-semibold">9月20日参加</th>
