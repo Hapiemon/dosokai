@@ -44,6 +44,41 @@ export default function SettingsPage() {
   const [responsesLoading, setResponsesLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [columnWidths, setColumnWidths] = useState({ checkbox: 48, lastName: 80, firstName: 80 });
+
+  useEffect(() => {
+    fetchForms();
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === 'responses') {
+      fetchResponses(selectedFormId);
+    }
+  }, [activeTab, selectedFormId]);
+
+  // 列幅を計算
+  useEffect(() => {
+    if (responses.length === 0) return;
+
+    // 各列の最大文字数を計算
+    let maxLastNameLength = '姓'.length; // ヘッダー
+    let maxFirstNameLength = '名'.length; // ヘッダー
+
+    responses.forEach((item) => {
+      if (item.lastName.length > maxLastNameLength) maxLastNameLength = item.lastName.length;
+      if (item.firstName.length > maxFirstNameLength) maxFirstNameLength = item.firstName.length;
+    });
+
+    // 文字幅を推定（日本語は約12px、英数は約6px、平均8px）
+    const charWidth = 7;
+    const padding = 8;
+
+    setColumnWidths({
+      checkbox: 48,
+      lastName: Math.max(60, maxLastNameLength * charWidth + padding),
+      firstName: Math.max(60, maxFirstNameLength * charWidth + padding),
+    });
+  }, [responses]);
 
   useEffect(() => {
     fetchForms();
@@ -386,7 +421,7 @@ export default function SettingsPage() {
                   <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
                     <thead>
                       <tr>
-                        <th className="sticky top-0 left-0 z-50 w-12 min-w-12 border border-gray-300 bg-gray-100 p-1 sm:p-2">
+                        <th className="sticky top-0 left-0 z-50 border border-gray-300 bg-gray-100 p-1 sm:p-2" style={{ width: columnWidths.checkbox }}>
                           <input
                             type="checkbox"
                             checked={selectedIds.size === responses.length && responses.length > 0}
@@ -394,8 +429,8 @@ export default function SettingsPage() {
                             className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                           />
                         </th>
-                        <th className="sticky top-0 left-12 z-40 min-w-28 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">姓</th>
-                        <th className="sticky top-0 left-40 z-40 min-w-28 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">名</th>
+                        <th className="sticky top-0 left-12 z-40 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ width: columnWidths.lastName }}>姓</th>
+                        <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName) }}>名</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">旧姓</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">電話番号</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">3年時クラス</th>
@@ -414,7 +449,7 @@ export default function SettingsPage() {
                     <tbody>
                       {responses.map((item) => (
                         <tr key={item.id} className="group hover:bg-gray-50">
-                          <td className="sticky left-0 z-20 w-12 min-w-12 border border-gray-300 bg-white p-1 sm:p-2 group-hover:bg-gray-50">
+                          <td className="sticky left-0 z-20 border border-gray-300 bg-white p-1 sm:p-2 group-hover:bg-gray-50" style={{ width: columnWidths.checkbox }}>
                             <input
                               type="checkbox"
                               checked={selectedIds.has(item.id)}
@@ -422,8 +457,8 @@ export default function SettingsPage() {
                               className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                             />
                           </td>
-                          <td className="sticky left-12 z-20 min-w-28 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50">{item.lastName}</td>
-                          <td className="sticky left-40 z-20 min-w-28 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50">{item.firstName}</td>
+                          <td className="sticky left-12 z-20 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ width: columnWidths.lastName }}>{item.lastName}</td>
+                          <td className="sticky z-20 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName }}>{item.firstName}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.maidenName || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.phone || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.class}</td>
