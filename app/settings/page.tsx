@@ -1,6 +1,6 @@
 'use client';
 
-import { TouchEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { TouchEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 interface Form {
   id: string;
@@ -44,7 +44,6 @@ export default function SettingsPage() {
   const [responsesLoading, setResponsesLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [columnWidths, setColumnWidths] = useState({ checkbox: 24, lastName: 80, firstName: 80 });
   const [tableZoom, setTableZoom] = useState(1);
   const pinchStartDistanceRef = useRef(0);
   const pinchStartZoomRef = useRef(1);
@@ -78,54 +77,20 @@ export default function SettingsPage() {
 
   useEffect(() => {
     fetchForms();
-  }, []);
+  }, [fetchForms]);
 
   useEffect(() => {
     if (activeTab === 'responses') {
       fetchResponses(selectedFormId);
     }
-  }, [activeTab, selectedFormId]);
-
-  // 列幅を計算
-  useEffect(() => {
-    if (responses.length === 0) return;
-
-    // 各列の最大文字数を計算
-    let maxLastNameLength = '姓'.length; // ヘッダー
-    let maxFirstNameLength = '名'.length; // ヘッダー
-
-    responses.forEach((item) => {
-      if (item.lastName.length > maxLastNameLength) maxLastNameLength = item.lastName.length;
-      if (item.firstName.length > maxFirstNameLength) maxFirstNameLength = item.firstName.length;
-    });
-
-    // 文字幅を推定（日本語は約12px、英数は約6px、平均8px）
-    const charWidth = 7;
-    const padding = 8;
-
-    setColumnWidths({
-      checkbox: 24,
-      lastName: Math.max(60, maxLastNameLength * charWidth + padding),
-      firstName: Math.max(60, maxFirstNameLength * charWidth + padding),
-    });
-  }, [responses]);
-
-  useEffect(() => {
-    fetchForms();
-  }, []);
-
-  useEffect(() => {
-    if (activeTab === 'responses') {
-      fetchResponses(selectedFormId);
-    }
-  }, [activeTab, selectedFormId]);
+  }, [activeTab, fetchResponses, selectedFormId]);
 
   const selectedForm = useMemo(
     () => forms.find((item) => item.formId === selectedFormId),
     [forms, selectedFormId]
   );
 
-  const fetchForms = async () => {
+  const fetchForms = useCallback(async () => {
     try {
       setFormsLoading(true);
       const response = await fetch('/api/forms');
@@ -146,7 +111,7 @@ export default function SettingsPage() {
     } finally {
       setFormsLoading(false);
     }
-  };
+  }, [selectedFormId]);
 
   const handleToggleFormStatus = async (formId: string, currentStatus: string) => {
     const newStatus = currentStatus === '実施中' ? '終了' : '実施中';
@@ -176,7 +141,7 @@ export default function SettingsPage() {
     }
   };
 
-  const fetchResponses = async (formId: string) => {
+  const fetchResponses = useCallback(async (formId: string) => {
     try {
       setResponsesLoading(true);
       setSelectedIds(new Set());
@@ -195,7 +160,7 @@ export default function SettingsPage() {
     } finally {
       setResponsesLoading(false);
     }
-  };
+  }, []);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
