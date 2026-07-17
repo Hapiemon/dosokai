@@ -421,7 +421,7 @@ export default function SettingsPage() {
                   <table className="min-w-max border-separate border-spacing-0 border border-gray-300 text-xs sm:text-sm whitespace-nowrap bg-white">
                     <thead>
                       <tr>
-                        <th className="sticky top-0 left-0 z-20 border border-gray-300 bg-gray-100 p-1 sm:p-2" style={{ width: columnWidths.checkbox }}>
+                        <th className="sticky left-0 z-20 border border-gray-300 bg-gray-100 p-1 sm:p-2" style={{ width: columnWidths.checkbox }}>
                           <input
                             type="checkbox"
                             checked={selectedIds.size === responses.length && responses.length > 0}
@@ -429,21 +429,21 @@ export default function SettingsPage() {
                             className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                           />
                         </th>
-                        <th className="sticky top-0 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: columnWidths.checkbox, width: columnWidths.lastName, zIndex: 15 }}>姓</th>
-                        <th className="sticky top-0 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName, zIndex: 15 }}>名</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>旧姓</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>電話番号</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>3年時クラス</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>5月3日参加</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>9月20日参加</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>不参加</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>同伴者有無</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>同伴者(大人)</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>同伴者(子供)</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>アレルギー有無</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>アレルギー詳細</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>備考</th>
-                        <th className="sticky top-0 z-10 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ zIndex: 10 }}>回答日時</th>
+                        <th className="sticky border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: columnWidths.checkbox, width: columnWidths.lastName, zIndex: 15 }}>姓</th>
+                        <th className="sticky border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName, zIndex: 15 }}>名</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">旧姓</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">電話番号</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">3年時クラス</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">5月3日参加</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">9月20日参加</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">不参加</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">同伴者有無</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">同伴者(大人)</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">同伴者(子供)</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">アレルギー有無</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">アレルギー詳細</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">備考</th>
+                        <th className="border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">回答日時</th>
                       </tr>
                     </thead>
                     <tbody>
