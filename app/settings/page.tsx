@@ -430,7 +430,7 @@ export default function SettingsPage() {
                           />
                         </th>
                         <th className="sticky top-0 z-40 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: columnWidths.checkbox, width: columnWidths.lastName }}>姓</th>
-                        <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName) }}>名</th>
+                        <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName }}>名</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">旧姓</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">電話番号</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">3年時クラス</th>
