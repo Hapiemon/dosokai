@@ -383,7 +383,7 @@ export default function SettingsPage() {
                 <div className="text-center py-12 text-gray-500">データがありません</div>
               ) : (
                 <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
-                  <table className="w-full border-collapse border border-gray-300 text-xs sm:text-sm">
+                  <table className="w-full border-collapse border border-gray-300 text-xs sm:text-sm whitespace-nowrap">
                     <thead>
                       <tr className="bg-gray-100">
                         <th className="border border-gray-300 p-1 sm:p-2">
