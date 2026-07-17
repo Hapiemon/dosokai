@@ -425,6 +425,7 @@ export default function SettingsPage() {
                           <td className="border border-gray-300 p-2">{item.lastName}</td>
                           <td className="border border-gray-300 p-2">{item.firstName}</td>
                           <td className="border border-gray-300 p-2">{item.maidenName || '-'}</td>
+                          <td className="border border-gray-300 p-2">{item.phone || '-'}</td>
                           <td className="border border-gray-300 p-2">{item.class}</td>
                           <td className="border border-gray-300 p-2 text-center">{item.eventMay3 === 1 ? '参加' : '-'}</td>
                           <td className="border border-gray-300 p-2 text-center">{item.eventSep20 === 1 ? '参加' : '-'}</td>
