@@ -34,6 +34,13 @@ interface ResponseItem {
   createdAt: string;
 }
 
+type Form2EditableFields = {
+  participationStatus: string;
+  paymentMethod: string;
+  settlementStatus: string;
+  remarks: string;
+};
+
 const PARTICIPATION_OPTIONS = ['参加', '不参加'] as const;
 const PAYMENT_OPTIONS = ['', '現金', 'PayPay', 'その他'] as const;
 const SETTLEMENT_OPTIONS = ['未', '済'] as const;
@@ -52,7 +59,9 @@ export default function SettingsPage() {
   const [responsesLoading, setResponsesLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [updatingResponseId, setUpdatingResponseId] = useState<string | null>(null);
+  const [savingForm2Changes, setSavingForm2Changes] = useState(false);
+  const [form2OriginalValues, setForm2OriginalValues] = useState<Record<string, Form2EditableFields>>({});
+  const [dirtyForm2Ids, setDirtyForm2Ids] = useState<Set<string>>(new Set());
   const [tableZoom, setTableZoom] = useState(1);
   const pinchStartDistanceRef = useRef(0);
   const pinchStartZoomRef = useRef(1);
@@ -153,6 +162,23 @@ export default function SettingsPage() {
 
       const data: ResponseItem[] = await response.json();
       setResponses(data);
+
+      if (formId === 'form2') {
+        const originals = data.reduce<Record<string, Form2EditableFields>>((acc, item) => {
+          acc[item.id] = {
+            participationStatus: item.participationStatus || '参加',
+            paymentMethod: item.paymentMethod || '',
+            settlementStatus: item.settlementStatus || '未',
+            remarks: item.remarks || '',
+          };
+          return acc;
+        }, {});
+        setForm2OriginalValues(originals);
+        setDirtyForm2Ids(new Set());
+      } else {
+        setForm2OriginalValues({});
+        setDirtyForm2Ids(new Set());
+      }
     } catch (error) {
       console.error('Error:', error);
       setMessage('回答データの取得に失敗しました');
@@ -263,32 +289,250 @@ export default function SettingsPage() {
   };
 
   const updateLocalForm2Row = (id: string, updates: Partial<ResponseItem>) => {
-    setResponses((prev) => prev.map((row) => (row.id === id ? { ...row, ...updates } : row)));
+    setResponses((prev) => {
+      const next = prev.map((row) => (row.id === id ? { ...row, ...updates } : row));
+      const updated = next.find((row) => row.id === id);
+      const original = form2OriginalValues[id];
+
+      if (updated && original) {
+        const currentEditable: Form2EditableFields = {
+          participationStatus: updated.participationStatus || '参加',
+          paymentMethod: updated.paymentMethod || '',
+          settlementStatus: updated.settlementStatus || '未',
+          remarks: updated.remarks || '',
+        };
+
+        const hasDiff =
+          currentEditable.participationStatus !== original.participationStatus ||
+          currentEditable.paymentMethod !== original.paymentMethod ||
+          currentEditable.settlementStatus !== original.settlementStatus ||
+          currentEditable.remarks !== original.remarks;
+
+        setDirtyForm2Ids((prevDirty) => {
+          const nextDirty = new Set(prevDirty);
+          if (hasDiff) {
+            nextDirty.add(id);
+          } else {
+            nextDirty.delete(id);
+          }
+          return nextDirty;
+        });
+      }
+
+      return next;
+    });
   };
 
-  const handleSaveForm2Response = async (item: ResponseItem) => {
+  const handleSaveForm2Changes = async () => {
     if (selectedFormId !== 'form2') {
       return;
     }
 
-    const nextParticipationStatus = item.participationStatus ?? '参加';
-    const nextPaymentMethod = item.paymentMethod ?? '';
-    const nextSettlementStatus = item.settlementStatus ?? '未';
-    const nextRemarks = item.remarks ?? '';
+    const targetItems = responses.filter((item) => dirtyForm2Ids.has(item.id));
+    if (targetItems.length === 0) {
+      setMessage('変更はありません');
+      return;
+    }
 
     try {
-      setUpdatingResponseId(item.id);
-      const response = await fetch(`/api/responses-form2/${item.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          participationStatus: nextParticipationStatus,
-          paymentMethod: nextPaymentMethod,
-          settlementStatus: nextSettlementStatus,
-          remarks: nextRemarks,
-        }),
+      setSavingForm2Changes(true);
+
+      await Promise.all(targetItems.map(async (item) => {
+        const response = await fetch(`/api/responses-form2/${item.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            participationStatus: item.participationStatus || '参加',
+            paymentMethod: item.paymentMethod || '',
+            settlementStatus: item.settlementStatus || '未',
+            remarks: item.remarks || '',
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('更新に失敗しました');
+        }
+      }));
+
+      await fetchResponses('form2');
+      setMessage(`${targetItems.length}件の変更を保存しました`);
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage('更新に失敗しました');
+    } finally {
+      setSavingForm2Changes(false);
+    }
+  };
+
+  const hasForm2Diff = selectedFormId === 'form2' && dirtyForm2Ids.size > 0;
+
+  const handleDiscardForm2Changes = async () => {
+    if (selectedFormId !== 'form2') {
+      return;
+    }
+
+    await fetchResponses('form2');
+    setMessage('未保存の変更を破棄しました');
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-6 sm:py-12 px-3 sm:px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
+          <div className="mb-6 sm:mb-8 border-b pb-4 sm:pb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">設定</h1>
+          </div>
+
+          {message && (
+            <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-blue-800">
+              {message}
+            </div>
+          )}
+
+          <div className="mb-6 flex gap-2 sm:gap-4 border-b text-sm sm:text-base">
+            <button
+              onClick={() => setActiveTab('forms')}
+              className={`pb-1 sm:pb-2 px-2 sm:px-4 font-semibold transition-colors text-xs sm:text-sm ${
+                activeTab === 'forms'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              フォーム管理
+            </button>
+            <button
+              onClick={() => setActiveTab('responses')}
+              className={`pb-1 sm:pb-2 px-2 sm:px-4 font-semibold transition-colors text-xs sm:text-sm ${
+                activeTab === 'responses'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              回答管理
+            </button>
+          </div>
+
+          {activeTab === 'forms' && (
+            <div>
+              <div className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4">
+                <h2 className="text-lg sm:text-2xl font-bold text-gray-800">アンケートのステータス管理</h2>
+                <button
+                  onClick={fetchForms}
+                  disabled={formsLoading}
+                  className="px-3 sm:px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors disabled:bg-gray-400 text-sm sm:text-base w-full sm:w-auto"
+                >
+                  更新
+                </button>
+              </div>
+
+              {formsLoading ? (
+                <div className="text-center py-12 text-gray-500">読み込み中...</div>
+              ) : forms.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">フォームが登録されていません</div>
+              ) : (
+                <div className="grid gap-4">
+                  {forms.map((form) => (
+                    <div
+                      key={form.id}
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-3 sm:p-4 border border-gray-200 rounded-lg hover:shadow-md transition"
+                    >
+                      <div className="flex-1">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-800">{form.title}</h3>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-1">ID: {form.formId}</p>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                            form.status === '実施中'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-red-100 text-red-800'
+                          }`}
+                        >
+                          {form.status}
+                        </div>
+
+                        <button
+                          onClick={() => handleToggleFormStatus(form.formId, form.status)}
+                          disabled={updatingFormId === form.formId}
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:bg-gray-400 font-semibold"
+                        >
+                          {updatingFormId === form.formId
+                            ? '変更中...'
+                            : form.status === '実施中'
+                              ? '終了する'
+                              : '再開する'}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'responses' && (
+            <div>
+              <div className="mb-4 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+                <label className="font-semibold text-gray-700">対象フォーム</label>
+                <select
+                  value={selectedFormId}
+                  onChange={(e) => setSelectedFormId(e.target.value)}
+                  className="px-2 sm:px-3 py-2 border border-gray-300 rounded-lg bg-white text-xs sm:text-sm"
+                >
+                  {forms.map((form) => (
+                    <option key={form.formId} value={form.formId}>
+                      {form.title}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => fetchResponses(selectedFormId)}
+                  disabled={responsesLoading || savingForm2Changes}
+                  className="px-3 sm:px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors disabled:bg-gray-400 text-xs sm:text-sm"
+                >
+                  更新
+                </button>
+                <button
+                  onClick={handleExportCsv}
+                  disabled={exporting || responsesLoading || savingForm2Changes}
+                  className="px-3 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors disabled:bg-gray-400 font-semibold text-xs sm:text-sm"
+                >
+                  {exporting ? '出力中...' : 'CSVエクスポート'}
+                </button>
+              </div>
+
+              {hasForm2Diff && (
+                <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                  <span className="text-sm text-amber-700 font-semibold">{dirtyForm2Ids.size}件の未保存変更があります</span>
+                  <button
+                    onClick={handleSaveForm2Changes}
+                    disabled={savingForm2Changes}
+                    className="px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:bg-gray-400 text-xs sm:text-sm font-semibold w-full sm:w-auto"
+                  >
+                    {savingForm2Changes ? '保存中...' : '変更を保存'}
+                  </button>
+                  <button
+                    onClick={handleDiscardForm2Changes}
+                    disabled={savingForm2Changes}
+                    className="px-3 sm:px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors disabled:bg-gray-400 text-xs sm:text-sm font-semibold w-full sm:w-auto"
+                  >
+                    変更を破棄
+                  </button>
+                </div>
+              )}
       });
 
       if (!response.ok) {
