@@ -141,19 +141,19 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white py-6 sm:py-12 px-3 sm:px-4">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow-xl p-8">
+        <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
           {/* ヘッダー */}
-          <div className="text-center mb-8 border-b pb-6">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+          <div className="text-center mb-6 sm:mb-8 border-b pb-4 sm:pb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-3 sm:mb-4">
               {isForm2 ? '🌸 第2回 同窓会アンケート 🌸' : '🌸 第1回 同窓会アンケート 🌸'}
             </h1>
-            <p className="text-gray-600 mb-4">下記の内容で同窓会を開催予定ですので、アンケートへご協力ください。</p>
-            <p className="text-gray-600 mb-2">
+            <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">下記の内容で同窓会を開催予定ですので、アンケートへご協力ください。</p>
+            <p className="text-xs sm:text-base text-gray-600 mb-2">
               {isForm2 ? '開催内容をご確認のうえ、参加可否をご回答ください。' : '集計結果によって開催日程を決定します。'}
             </p>
-            <p className="text-sm text-red-600 font-semibold">
+            <p className="text-xs sm:text-sm text-red-600 font-semibold">
               {isForm2 ? '※回答期限:2026年7月26日(日)' : '※回答期限:2026年2月15日(日)'}
             </p>
           </div>
