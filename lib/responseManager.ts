@@ -5,6 +5,7 @@ export type UnifiedResponse = {
   lastName: string;
   firstName: string;
   maidenName: string | null;
+  phone: string | null;
   class: string;
   eventMay3: number;
   eventSep20: number;
