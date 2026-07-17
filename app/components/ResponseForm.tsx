@@ -159,48 +159,48 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
           </div>
 
           {/* イベント詳細 */}
-          <div className="bg-pink-50 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">■ 開催概要</h2>
-            <div className="space-y-4 text-gray-700">
+          <div className="bg-pink-50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">■ 開催概要</h2>
+            <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-gray-700">
               <div className="space-y-2">
                 <p className="font-semibold text-pink-600 mb-2">開催日程</p>
                 {isForm2 ? (
-                  <label className="flex items-center ml-2">
-                    <span className="text-base">2026年9月20日(日)</span>
+                  <label className="flex items-center ml-3 sm:ml-4">
+                    <span className="text-sm sm:text-base">2026年9月20日(日)</span>
                   </label>
                 ) : (
                   <>
-                    <label className="flex items-center ml-2">
-                      <span className="text-base">案1:2026年5月3日(日)</span>
+                    <label className="flex items-center ml-3 sm:ml-4">
+                      <span className="text-sm sm:text-base">案1:2026年5月3日(日)</span>
                     </label>
-                    <label className="flex items-center ml-2">
-                      <span className="text-base">案2:2026年9月20日(日)</span>
+                    <label className="flex items-center ml-3 sm:ml-4">
+                      <span className="text-sm sm:text-base">案2:2026年9月20日(日)</span>
                     </label>
                   </>
                 )}
               </div>
               <div>
                 <p className="font-semibold">📍 場所</p>
-                <p className="ml-4">{isForm2 ? 'サクラマチ屋上 Cafe & Garden Bar クラック' : 'サクラマチ熊本 RHCカフェ'}</p>
+                <p className="ml-3 sm:ml-4 text-sm sm:text-base">{isForm2 ? 'サクラマチ屋上 Cafe & Garden Bar クラック' : 'サクラマチ熊本 RHCカフェ'}</p>
                 {isForm2 ? (
-                  <p className="ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/cafegardenbar-craic" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">会場サイト</a></p>
+                  <p className="ml-3 sm:ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/cafegardenbar-craic" className="text-pink-600 underline text-sm sm:text-base" target="_blank" rel="noopener noreferrer">会場サイト</a></p>
                 ) : (
-                  <p className="ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/rhcronherman_cafe" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">お店の詳細</a></p>
+                  <p className="ml-3 sm:ml-4"><a href="https://sakuramachi-kumamoto.jp/shop/rhcronherman_cafe" className="text-pink-600 underline text-sm sm:text-base" target="_blank" rel="noopener noreferrer">お店の詳細</a></p>
                 )}
               </div>
               <div>
                 <p className="font-semibold">🕐 時間</p>
                 {isForm2 ? (
                   <>
-                    <p className="ml-4">受付開始：16:00</p>
-                    <p className="ml-4">同窓会開始：16:30</p>
-                    <p className="ml-4">終了：18:30</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">受付開始：16:00</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">同窓会開始：16:30</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">終了：18:30</p>
                   </>
                 ) : (
                   <>
-                    <p className="ml-4">受付：17:30</p>
-                    <p className="ml-4">開始：18:00</p>
-                    <p className="ml-4">終了：20:00</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">受付：17:30</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">開始：18:00</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">終了：20:00</p>
                   </>
                 )}
               </div>
@@ -208,7 +208,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 <p className="font-semibold">💰 形式・予算</p>
                 {isForm2 ? (
                   <>
-                    <p className="ml-4">形式：着席</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">形式：着席</p>
                     <p className="ml-4">ドレスコード：なし</p>
                     <p className="ml-4">参加費：3,800円</p>
                     <p className="ml-4">集金方法：当日現金 もしくは オンライン送金（PayPay）</p>
@@ -225,72 +225,72 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
           </div>
 
           {/* フォーム */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {/* 姓 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                 姓 <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                 placeholder="山田"
               />
             </div>
 
             {/* 名 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                 名 <span className="text-red-600">*</span>
               </label>
               <input
                 type="text"
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                 placeholder="太郎"
               />
             </div>
 
             {/* 旧姓 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                 旧姓(あれば記入お願いします)
               </label>
               <input
                 type="text"
                 value={formData.maidenName}
                 onChange={(e) => setFormData({ ...formData, maidenName: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                 placeholder="鈴木"
               />
             </div>
 
             {/* 電話番号 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                 電話番号 <span className="text-red-600">*</span>
               </label>
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
                 placeholder="09012345678 または 090-1234-5678"
               />
             </div>
 
             {/* 組 */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
+              <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                 3年生の時の組 <span className="text-red-600">*</span>
               </label>
               <select
                 value={formData.class}
                 onChange={(e) => setFormData({ ...formData, class: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base"
               >
                 <option value="">選択してください</option>
                 <option value="1">1組</option>
