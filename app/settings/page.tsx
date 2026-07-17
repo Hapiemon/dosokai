@@ -429,7 +429,7 @@ export default function SettingsPage() {
                             className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                           />
                         </th>
-                        <th className="sticky top-0 left-12 z-40 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ width: columnWidths.lastName }}>姓</th>
+                        <th className="sticky top-0 z-40 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: columnWidths.checkbox, width: columnWidths.lastName }}>姓</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold" style={{ left: (columnWidths.checkbox + columnWidths.lastName) }}>名</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">旧姓</th>
                         <th className="sticky top-0 z-30 border border-gray-300 bg-gray-100 p-1 sm:p-2 text-left font-semibold">電話番号</th>
@@ -457,7 +457,7 @@ export default function SettingsPage() {
                               className="cursor-pointer w-4 h-4 sm:w-5 sm:h-5"
                             />
                           </td>
-                          <td className="sticky left-12 z-20 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ width: columnWidths.lastName }}>{item.lastName}</td>
+                          <td className="sticky z-20 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ left: columnWidths.checkbox, width: columnWidths.lastName }}>{item.lastName}</td>
                           <td className="sticky z-20 border border-gray-300 bg-white p-1 sm:p-2 text-xs sm:text-sm group-hover:bg-gray-50" style={{ left: (columnWidths.checkbox + columnWidths.lastName), width: columnWidths.firstName }}>{item.firstName}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.maidenName || '-'}</td>
                           <td className="border border-gray-300 p-1 sm:p-2 text-xs sm:text-sm">{item.phone || '-'}</td>
