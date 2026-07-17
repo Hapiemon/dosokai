@@ -13,6 +13,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
     lastName: '',
     firstName: '',
     maidenName: '',
+    phone: '',
     class: '',
     eventDates: [] as string[],
     companionStatus: '',
@@ -36,6 +37,14 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
 
     if (!formData.firstName.trim()) {
       return '名を入力してください';
+    }
+
+    if (!formData.phone.trim()) {
+      return '電話番号を入力してください';
+    }
+
+    if (!/^\d{10,11}$|^(\d{2,4}-?){2}\d{3,4}$/.test(formData.phone.replace(/-/g, ''))) {
+      return '正しい電話番号を入力してください（ハイフンなし10-11桁、またはハイフン付き形式）';
     }
 
     if (!formData.class) {
@@ -92,6 +101,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
           lastName: formData.lastName,
           firstName: formData.firstName,
           maidenName: formData.maidenName || null,
+          phone: formData.phone,
           class: formData.class,
           eventDates: formData.eventDates,
           companionStatus: formData.companionStatus,
@@ -109,6 +119,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
           lastName: '',
           firstName: '',
           maidenName: '',
+          phone: '',
           class: '',
           eventDates: [],
           companionStatus: '',
@@ -254,6 +265,20 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 onChange={(e) => setFormData({ ...formData, maidenName: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                 placeholder="鈴木"
+              />
+            </div>
+
+            {/* 電話番号 */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                電話番号 <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                placeholder="09012345678 または 090-1234-5678"
               />
             </div>
 
