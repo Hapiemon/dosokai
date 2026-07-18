@@ -188,15 +188,15 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 <p className="font-semibold text-pink-600 mb-2">時間</p>
                 {isForm2 ? (
                   <>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">受付開始：16:00</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">同窓会開始：16:30</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">終了：18:30</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">受付開始</span>：16:00</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">同窓会開始</span>：16:30</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">終了</span>：18:30</p>
                   </>
                 ) : (
                   <>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">受付：17:30</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">開始：18:00</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">終了：20:00</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">受付</span>：17:30</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">開始</span>：18:00</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">終了</span>：20:00</p>
                   </>
                 )}
               </div>
@@ -204,16 +204,16 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
                 <p className="font-semibold text-pink-600 mb-2">形式・予算</p>
                 {isForm2 ? (
                   <>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">形式：着席</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">ドレスコード：なし</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">参加費：3,800円</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">集金方法：当日現金 もしくは オンライン送金（PayPay）</p>
-                    <p className="ml-3 sm:ml-4 text-sm sm:text-base">キャンセルポリシー：現在交渉中のため、後日ご案内します。</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">形式</span>：着席</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">ドレスコード</span>：なし</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">参加費</span>：3,800円</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">集金方法</span>：当日現金 もしくは オンライン送金（PayPay）</p>
+                    <p className="ml-3 sm:ml-4 text-xs sm:text-sm text-red-600 font-semibold">※キャンセルポリシーは現在交渉中のため、後日ご案内します。</p>
                   </>
                 ) : (
                   <>
-                    <p className="ml-4">立食形式</p>
-                    <p className="ml-4">会費:5,000円前後予定</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">形式</span>：立食</p>
+                    <p className="ml-3 sm:ml-4 text-sm sm:text-base"><span className="inline-block w-24 sm:w-28">会費</span>：5,000円前後予定</p>
                   </>
                 )}
               </div>
