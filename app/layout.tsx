@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     default: "同窓会アンケート",
     template: "%s | 同窓会アンケート",
   },
-  description: "同窓会アンケート管理システム",
+  description: "2017年卒 出南中同窓会用 特設サイト",
 };
 
 export default function RootLayout({
