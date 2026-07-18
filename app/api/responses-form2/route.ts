@@ -38,18 +38,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!lastName || !firstName || !phone || !classValue || !eventDates || eventDates.length === 0 || !companionStatus || typeof hasAllergy !== 'boolean') {
+    if (!lastName || !firstName || !classValue || !eventDates || eventDates.length === 0 || !companionStatus || typeof hasAllergy !== 'boolean') {
       return NextResponse.json(
         { error: '必須項目が入力されていません' },
-        { status: 400 }
-      );
-    }
-
-    // 電話番号の形式チェック
-    const phoneRegex = /^\d{10,11}$|^(\d{2,4}-?){2}\d{3,4}$/;
-    if (!phoneRegex.test(phone.replace(/-/g, ''))) {
-      return NextResponse.json(
-        { error: '正しい電話番号を入力してください' },
         { status: 400 }
       );
     }

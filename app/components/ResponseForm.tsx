@@ -39,14 +39,6 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
       return '名を入力してください';
     }
 
-    if (!formData.phone.trim()) {
-      return '電話番号を入力してください';
-    }
-
-    if (!/^\d{10,11}$|^(\d{2,4}-?){2}\d{3,4}$/.test(formData.phone.replace(/-/g, ''))) {
-      return '正しい電話番号を入力してください（ハイフンなし10-11桁、またはハイフン付き形式）';
-    }
-
     if (!formData.class) {
       return '組を選択してください';
     }
@@ -272,7 +264,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 電話番号 */}
             <div>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                電話番号 <span className="text-red-600">*</span>
+                電話番号
               </label>
               <input
                 type="tel"
