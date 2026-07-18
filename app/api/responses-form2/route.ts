@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!lastName || !firstName || !classValue || !eventDates || eventDates.length === 0 || !companionStatus || typeof hasAllergy !== 'boolean') {
+    if (!lastName || !firstName || !phone || !classValue || !eventDates || eventDates.length === 0 || !companionStatus || typeof hasAllergy !== 'boolean') {
       return NextResponse.json(
         { error: '必須項目が入力されていません' },
         { status: 400 }

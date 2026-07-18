@@ -39,6 +39,10 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
       return '名を入力してください';
     }
 
+    if (!formData.phone.trim()) {
+      return '電話番号を入力してください';
+    }
+
     if (!formData.class) {
       return '組を選択してください';
     }
@@ -264,7 +268,7 @@ export default function ResponseForm({ formId = 'form1' }: ResponseFormProps) {
             {/* 電話番号 */}
             <div>
               <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
-                電話番号
+                電話番号 <span className="text-red-600">*</span>
               </label>
               <input
                 type="tel"
